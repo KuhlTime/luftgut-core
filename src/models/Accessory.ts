@@ -1,4 +1,4 @@
-import Characteristic from './characteristic'
+import Characteristic from './Characteristic'
 
 /**
  * An accessory can be anything from a gas sensor to a sysmograph

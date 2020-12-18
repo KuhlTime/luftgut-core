@@ -1,5 +1,5 @@
-import Accessory from './accessory'
-import Characteristic from './characteristic'
-import Station from './station'
+import Accessory from './Accessory'
+import Characteristic from './Characteristic'
+import Station from './Station'
 
 export { Accessory, Characteristic, Station }

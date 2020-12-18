@@ -198,3 +198,4 @@ $RECYCLE.BIN/
 *.key
 *.cert
 *.pem
+db.json

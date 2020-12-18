@@ -1,4 +1,4 @@
-import Accessory from './accessory'
+import Accessory from './Accessory'
 
 class Station {
   id: string
