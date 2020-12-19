@@ -18,6 +18,8 @@ openssl x509 -req -in csr.pem -signkey key.pem -out server.cert
 
 Da es sich um ein "Self Signed" Zertifikat handelt wird der Browser vor dem Verbinden mit dieser Webseite warnen. Solange niemand zu dem Raspberry Pi und dem darauf gespeicherten Schlüsselpaar zugang hat, hat der Nutzer hier nichts zu befürchten.
 
+![Self Signed SSL Certificate](./resources/ssl.png)
+
 ## NPM Scripts
 
 ```shell
