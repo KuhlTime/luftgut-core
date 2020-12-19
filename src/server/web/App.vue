@@ -1,12 +1,20 @@
 <template>
   <div id="app">
-    <h1>Vue JS is working 🥳</h1>
+    <navbar></navbar>
+    <transition name="page" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
+import NavBar from './components/NavBar'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    'navbar': NavBar
+  }
 }
 </script>
 
@@ -17,6 +25,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  box-sizing: border-box;
+}
+
+/* Page Fading Animation */
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 250ms, transform 250ms;
+}
+
+.page-enter,
+.page-leave-to {
+  opacity: 0;
 }
 </style>
