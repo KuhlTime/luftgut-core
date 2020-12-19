@@ -21,7 +21,7 @@ Da es sich um ein "Self Signed" Zertifikat handelt wird der Browser vor dem Verb
 ## NPM Scripts
 
 ```shell
-npm run <command>
+sudo npm run <command>
 ```
 
 `start`<br>
