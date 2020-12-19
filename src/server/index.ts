@@ -3,9 +3,13 @@ import path from 'path'
 import https from 'https'
 import express from 'express'
 import bodyParser from 'body-parser'
+import Bundler from 'parcel-bundler'
 import cors from 'cors'
 
 import { auth, isLoggedIn, getCurrentUser } from '../firebase'
+
+import { Logger } from '../lib/betterLog'
+const better = new Logger('Express')
 
 import SetupObject from '../models/SetupObject'
 
@@ -32,28 +36,41 @@ if (env === 'development') {
 
 // Load the keys
 // https://stackoverflow.com/a/24283204/4179020
-const privateKey = fs.readFileSync(path.join(__dirname, 'ssl/key.pem'), 'utf8')
-const certificate = fs.readFileSync(path.join(__dirname, 'ssl/server.cert'), 'utf8')
+const privateKeyPath = path.join(__dirname, 'ssl/key.pem')
+const privateKey = fs.readFileSync(privateKeyPath, 'utf8')
+const certificatePath = path.join(__dirname, 'ssl/server.cert')
+const certificate = fs.readFileSync(certificatePath, 'utf8')
 
 // In case the key is configured to use a passphrase add a `passphrase` property to the object.
 const credentials = { key: privateKey, cert: certificate }
+
+// === SETUP PARCEL ===
+
+// defines the website folder
+const srcFile = path.join(__dirname, 'web/index.html')
+const parcelOptions = {
+  sourceMaps: false,
+  logLevel: env === 'development' ? 3 : 0,
+  https: {
+    key: privateKeyPath,
+    cert: certificatePath
+  }
+}
+const bundler = new Bundler(srcFile, parcelOptions)
+
+app.use(bundler.middleware())
 
 // === SETUP EXPRESS ===
 
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => {
-  console.log('[REQUEST]: GET /')
-  res.send({ success: true, message: 'Hello from your Luftgut Weather Station!' })
-})
-
 app.get('/cert', (req, res) => {
-  console.log('[REQUEST]: GET /cert')
+  better.info('GET /cert')
   res.download(path.join(__dirname, 'ssl/server.cert'), 'luftgut.cert')
 })
 
 app.get('/user', (req, res) => {
-  console.log('[REQUEST]: GET /user')
+  better.info('GET /user')
   if (isLoggedIn()) {
     res.send({ success: true, message: 'Successfully retrived user data', data: getCurrentUser() })
   } else {
@@ -62,7 +79,7 @@ app.get('/user', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-  console.log('[REQUEST]: POST /login')
+  better.info('POST /login')
 
   const body = req.body
 
@@ -81,7 +98,7 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-  console.log('[REQUEST]: POST /register')
+  better.info('POST /register')
   const body = req.body
 
   if (isLoggedIn()) {
@@ -98,7 +115,7 @@ app.post('/register', (req, res) => {
 })
 
 app.get('/logout', (req, res) => {
-  console.log('[REQUEST]: GET /signout')
+  better.info('GET /signout')
 
   if (isLoggedIn()) {
     auth
@@ -107,7 +124,7 @@ app.get('/logout', (req, res) => {
         res.send({ success: true, message: 'Successfully logged out' })
       })
       .catch(err => {
-        console.error(err.message)
+        better.error(err.message)
         res.status(500).send({ success: false, message: err.message })
       })
   } else {
@@ -120,5 +137,5 @@ app.get('/logout', (req, res) => {
 const httpsServer = https.createServer(credentials, app)
 
 httpsServer.listen(443, () => {
-  console.log('HTTPS-Server listening on Port 443')
+  better.info('Server listening on Port 443')
 })
