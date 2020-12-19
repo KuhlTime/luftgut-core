@@ -8,8 +8,8 @@
     "build": "tsc -p tsconfig.release.json",
     "build:watch": "tsc -w -p tsconfig.release.json",
     "lint": "eslint . --ext .ts,.tsc --fix",
-    "dev": "nodemon --watch 'src/**/*' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts",
-    "dev:lint": "nodemon --watch 'src/**/*' --ignore 'src/**/*.spec.ts' --exec 'npm run lint && ts-node' src/main.ts"
+    "dev": "nodemon --watch 'src/**/*' --ignore 'src/**/*.spec.ts' --ignore 'src/server/web/**/*' --exec 'ts-node' src/main.ts",
+    "dev:lint": "nodemon --watch 'src/**/*' --ignore 'src/**/*.spec.ts' --ignore 'src/server/web/**/*' --exec 'npm run lint && ts-node' src/main.ts"
   },
   "author": "Luftgut",
   "license": "ISC",
