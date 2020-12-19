@@ -1,5 +1,23 @@
 # luftgut-core
 
+## Setup
+
+Um den Nutzer und seine Daten zu schützen ist eine Verbindung mit dem Webserver ausschließlich über eine `https` Verbindung möglich. Für die Verwendung des https Protokolles ist es notwendig zuvor ein SSL Zertifikat zu generieren.
+
+```shell
+cd src/server/ssl
+```
+
+```shell
+openssl req -newkey rsa -new -config openssl.conf -out csr.pem
+```
+
+```shell
+openssl x509 -req -in csr.pem -signkey key.pem -out server.cert
+```
+
+Da es sich um ein "Self Signed" Zertifikat handelt wird der Browser vor dem Verbinden mit dieser Webseite warnen. Solange niemand zu dem Raspberry Pi und dem darauf gespeicherten Schlüsselpaar zugang hat, hat der Nutzer hier nichts zu befürchten.
+
 ## NPM Scripts
 
 ```shell
