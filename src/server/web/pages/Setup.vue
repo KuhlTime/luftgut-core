@@ -45,7 +45,7 @@ String.prototype.isEmpty = function () {
 }
 
 export default {
-  name: 'login',
+  name: 'setup',
   components: { container: Container, spinner: Spinner },
   data: () => {
     return {

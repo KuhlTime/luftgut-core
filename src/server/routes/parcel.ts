@@ -3,8 +3,6 @@ import Bundler from 'parcel-bundler'
 
 const env = process.env.NODE_ENV || 'development'
 
-// === SETUP PARCEL ===
-
 // defines the website folder
 const srcFile = path.join(__dirname, '../web/index.html')
 
@@ -17,6 +15,4 @@ const parcelOptions = {
   }
 }
 
-const bundler = new Bundler(srcFile, parcelOptions)
-
-export default bundler.middleware()
+export default new Bundler(srcFile, parcelOptions)

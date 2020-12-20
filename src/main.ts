@@ -3,4 +3,4 @@
 
 // Start Webserver
 import './server'
-import './firebase/authStateChange.js'
+import './firebase/auth-state/authStateChangeHandler'

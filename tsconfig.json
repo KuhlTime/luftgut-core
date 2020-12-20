@@ -18,14 +18,17 @@
     "noImplicitThis": false,
     "strictNullChecks": false,
     "strict": true,
-    "baseUrl": ".",
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    }
   },
   "include": [
-    "src/**/*"
+    "**/*"
   ],
   "exclude": [
-    "src/server/web"
+    "server/web"
   ]
 }

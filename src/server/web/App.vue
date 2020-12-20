@@ -2,13 +2,15 @@
   <div id="app">
     <navbar id="navbar" :class="{ hidden: !showNavbar }"></navbar>
     <transition name="page" mode="out-in">
-      <router-view></router-view>
+      <router-view class="content"></router-view>
     </transition>
   </div>
 </template>
 
 <script>
 import NavBar from './components/NavBar'
+
+const env = process.env.NODE_ENV || 'development'
 
 export default {
   name: 'App',
@@ -21,7 +23,21 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('fetchUser')
+    this.$store.commit('setLoading')
+
+    this.$store.dispatch('fetchUser').then(success => {
+      if (success) {
+        console.log('App: Redirect')
+
+        // Fake loading time to prevent flash
+        setTimeout(
+          () => {
+            this.$router.push({ name: 'Dashboard' })
+          },
+          env === 'development' ? 0 : 2000
+        )
+      }
+    })
   }
 }
 </script>
@@ -31,13 +47,21 @@ export default {
   -webkit-user-drag: none;
 }
 
-#app {
+body {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   box-sizing: border-box;
+
+  // Display
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  // Background
+  background-color: rgba(0, 0, 0, 0.03);
 }
 
 #navbar.hidden {

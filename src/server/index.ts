@@ -5,16 +5,15 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 
-import unless from './lib/unless'
+import unless from '@/lib/unless'
+import api from './routes/api'
+import parcelBundler from './routes/parcel'
 
-import apiRouter from './routes/api'
-import parcelMiddleware from './routes/parcel-middleware'
-
-import { Logger } from '../lib/betterLog'
+import { Logger } from '@/lib/betterLog'
 const better = new Logger('Express')
 
 const env = process.env.NODE_ENV || 'development'
-console.log(`Launching server in: ${env}`)
+better.info(`${env} mode enabled`)
 
 const app = express()
 
@@ -50,8 +49,8 @@ const credentials = { key: privateKey, cert: certificate }
 
 // === SETUP ROUTES ===
 
-app.use('/api', apiRouter)
-app.use(unless(parcelMiddleware, '/api'))
+app.use('/api', api)
+app.use(unless(parcelBundler.middleware(), '/api'))
 
 // === START SERVER ===
 

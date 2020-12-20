@@ -1,4 +1,4 @@
-import uuid from 'uuid'
+import { v5 as uuid } from 'uuid'
 
 enum MessageType {
   Warning,
@@ -20,4 +20,4 @@ class Message {
   }
 }
 
-export default Message
+export { Message, MessageType }
