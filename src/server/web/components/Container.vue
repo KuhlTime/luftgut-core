@@ -1,10 +1,10 @@
 <template>
   <div
     class="container"
-    :style="{'max-width': maxWidth, 'width': width}"
-    :class="{'center': center}"
+    :style="{ 'max-width': maxWidth, width: width }"
+    :class="{ left, center, right, debug }"
   >
-    <slot/>
+    <slot />
   </div>
 </template>
 
@@ -20,7 +20,10 @@ export default {
       type: String,
       default: '90%'
     },
-    center: Boolean
+    center: Boolean,
+    left: Boolean,
+    right: Boolean,
+    debug: Boolean
   }
 }
 </script>
@@ -34,10 +37,24 @@ export default {
   width: 100%;
 }
 
+.left {
+  margin-left: 0;
+  margin-right: auto;
+}
+
 .center {
   // Position
   margin-left: auto;
   margin-right: auto;
+}
+
+.right {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.debug {
+  border: 1px dashed red;
 }
 </style>
 

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navbar></navbar>
+    <navbar id="navbar" :class="{ hidden: !showNavbar }"></navbar>
     <transition name="page" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -13,12 +13,24 @@ import NavBar from './components/NavBar'
 export default {
   name: 'App',
   components: {
-    'navbar': NavBar
+    navbar: NavBar
+  },
+  computed: {
+    showNavbar: function () {
+      return this.$route.meta.showNavbar
+    }
+  },
+  mounted() {
+    this.$store.dispatch('fetchUser')
   }
 }
 </script>
 
 <style lang="scss">
+* {
+  -webkit-user-drag: none;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -28,7 +40,13 @@ export default {
   box-sizing: border-box;
 }
 
-/* Page Fading Animation */
+#navbar.hidden {
+  transition: all ease-in-out 500ms;
+  height: 0;
+  padding: 0;
+}
+
+// Page Fading Animation
 
 .page-enter-active,
 .page-leave-active {
