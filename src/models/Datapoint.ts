@@ -8,6 +8,7 @@ type DataRecord = Record<string, unknown>
 
 /**
  * A `Datapoint` holds data to be uploaded to firebase.
+ * The properties get exported to firebase. So the names have to match the expected format.
  */
 export default class Datapoint {
   /* ------------------------------- Properties ------------------------------- */
@@ -15,7 +16,7 @@ export default class Datapoint {
   /**
    * The timestamp the data point was created
    */
-  created: Date = new Date()
+  timestamp: Date = new Date()
 
   /**
    * The data stored inside the `Datapoint`.
