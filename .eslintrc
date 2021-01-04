@@ -20,6 +20,21 @@
     "prettier/@typescript-eslint"
   ],
   "rules": {
-    "@typescript-eslint/no-unused-vars": "warn"
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "String": {
+            "message": "Use string instead",
+            "fixWith": "string"
+          },
+          "{}": {
+            "message": "Use object instead",
+            "fixWith": "object"
+          }
+        }
+      }
+    ]
   }
 }
