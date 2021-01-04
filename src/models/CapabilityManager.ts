@@ -76,7 +76,7 @@ export default class CapabilityManager<T> {
         0
       ) {
         // Valid
-        return this.latestSnapshot!
+        return this.latestSnapshot
       } else {
         // Expired
         this.latestSnapshot = undefined
@@ -92,7 +92,7 @@ export default class CapabilityManager<T> {
       // store the snapshot
       this.latestSnapshot = doc
       this.latestSnapshotTimestamp = Date.now()
-      return this.latestSnapshot!
+      return this.latestSnapshot
     } else {
       throw Error(`Capability ${this.capabilityReference.id} not found`)
     }
