@@ -50,7 +50,7 @@ export default class Datapoint {
    * Returns a string to use as the id for the new firestore document
    */
   get documentId(): string {
-    return this.created.toISOString()
+    return this.timestamp.toISOString()
   }
 
   /* --------------------------------- Methods -------------------------------- */
