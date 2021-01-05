@@ -1,5 +1,11 @@
 {
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
+  },
+  "material-icon-theme.folders.associations": {
+    "websocket": "Pipe",
+    "firebase": "Firebase",
+    "auth-state": "Rules",
+    "payloads": "Messages"
   }
 }

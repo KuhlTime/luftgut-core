@@ -3,6 +3,7 @@
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
     "octref.vetur",
-    "meganrogge.template-string-converter"
+    "meganrogge.template-string-converter",
+    "pkief.material-icon-theme"
   ]
 }
