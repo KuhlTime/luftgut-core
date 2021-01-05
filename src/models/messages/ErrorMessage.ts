@@ -1,4 +1,4 @@
-import Message from './index'
+import Message from './Message'
 
 /**
  * Login Message

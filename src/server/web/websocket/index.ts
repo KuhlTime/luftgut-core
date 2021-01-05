@@ -1,13 +1,14 @@
 import { io } from 'socket.io-client'
-import { UpdateMessage } from '../../../models/messages'
+import { ErrorMessage, UpdateMessage } from '../../../models/messages'
 
 const socket = io()
 
 socket.on('update', msg => {
-  const message = UpdateMessage.toClass(msg)
-  console.dir(message)
+  const updateMessage = UpdateMessage.toClass(msg)
+  console.dir(updateMessage)
 })
 
-socket.on('error', error => {
+socket.on('error', msg => {
+  const errorMessage = ErrorMessage.toClass(msg)
   console.error(error)
 })

@@ -1,4 +1,4 @@
-import Message from './index'
+import Message from './Message'
 
 /**
  * This is the setup message which either gets send on the initial setup
