@@ -4,8 +4,7 @@ import { Logger } from '../../lib/betterLog'
 
 const better = new Logger('Auth')
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function loginHandler(user: firebase.User): Promise<any> {
+async function loginHandler(user: firebase.User): Promise<void> {
   // User logged in
   better.info('User Logged In')
 

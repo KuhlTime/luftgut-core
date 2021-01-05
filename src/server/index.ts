@@ -5,17 +5,20 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 
-import unless from '@/lib/unless'
-import api from './routes/api'
-import parcelBundler from './routes/parcel'
-
 import { Logger } from '@/lib/betterLog'
 const better = new Logger('Express')
+
+import unless from '@/lib/unless'
+import parcelBundler from './middleware/parcel'
+
+import io from './websocket'
 
 const env = process.env.NODE_ENV || 'development'
 better.info(`${env} mode enabled`)
 
 const app = express()
+
+const PORT = 443
 
 // === SETUP CORS ===
 
@@ -25,11 +28,16 @@ const corsOptions = {
 }
 
 // Allows CORS (Cross-Origin Ressource Sharing)
-if (env === 'development') {
-  app.use(cors())
+/*if (env === 'development') {
+  app.use(
+    cors({
+      origin: '*'
+    })
+  )
 } else {
   app.use(cors(corsOptions))
-}
+}*/
+app.use(cors({ origin: '*' }))
 
 // === SETUP BODYPARSER ===
 
@@ -45,19 +53,30 @@ const certificatePath = path.join(__dirname, 'ssl/server.cert')
 const certificate = fs.readFileSync(certificatePath, 'utf8')
 
 // In case the key is configured to use a passphrase add a `passphrase` property to the object.
-const credentials = { key: privateKey, cert: certificate }
+const serverOptions = {
+  key: privateKey,
+  cert: certificate
+  // requestCert: false,
+  // rejectUnauthorized: false
+}
 
 // === SETUP ROUTES ===
 
-app.use('/api', api)
-app.use(unless(parcelBundler.middleware(), '/api'))
+app.use(unless(parcelBundler.middleware(), '/socket.io'))
+
+// === SETUP SERVER ===
+
+const server = https.createServer(serverOptions, app)
+
+// === SETUP SOCKET.IO ===
+
+io.attach(server)
 
 // === START SERVER ===
 
-const httpsServer = https.createServer(credentials, app)
-
-httpsServer.listen(443, () => {
-  better.info('Server listening on Port 443')
+server.listen(PORT, () => {
+  const address = server.address() as { port: number }
+  better.info(`Server listening on Port ${address.port}`)
 })
 
 export { privateKeyPath, certificatePath }

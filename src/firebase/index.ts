@@ -5,6 +5,8 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/storage'
 
+// === FIREBASE ===
+
 // Firebase credentials
 const firebaseConfig = {
   apiKey: 'AIzaSyBL4mnfw7mMNA85k9ylXrzXjRjaLZcWp9Y',
@@ -17,29 +19,29 @@ const firebaseConfig = {
   measurementId: 'G-PQNRM1E3XV'
 }
 
-// Setup firebase
 firebase.initializeApp(firebaseConfig)
 
-// Setup firestore
-const db = firebase.firestore()
+export { firebase }
 
-// Firebase authentication
-const auth = firebase.auth()
+// === FIRESTORE ===
 
-const getCurrentUser = (): firebase.User => {
+export const db = firebase.firestore()
+
+export const stations = db.collection('stations')
+export const capabilities = db.collection('capabilities')
+
+// === AUTH ===
+
+export const auth = firebase.auth()
+
+export const getCurrentUser = (): firebase.User => {
   return auth.currentUser
 }
-const isLoggedIn = (): boolean => {
+
+export const isLoggedIn = (): boolean => {
   return getCurrentUser() !== null
 }
 
-// Setup firebase storage
-const storage = firebase.storage()
+// === STORAGE ===
 
-// === Firebase Collections ===
-
-const stations = db.collection('stations')
-const capabilities = db.collection('capabilities')
-
-// Export reusable modules
-export { firebase, auth, getCurrentUser, isLoggedIn, storage, stations, capabilities }
+export const storage = firebase.storage()

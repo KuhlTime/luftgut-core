@@ -3,6 +3,14 @@ import Vuex from 'vuex'
 import _ from 'lodash'
 import firebase from 'firebase/app'
 
+import { io } from 'socket.io-client'
+
+const socket = io()
+
+socket.on('update', data => {
+  console.log(data)
+})
+
 import router from '../router'
 import { Message, MessageType } from '../models/Message'
 import LoginPayload from '../models/LoginPayload'
