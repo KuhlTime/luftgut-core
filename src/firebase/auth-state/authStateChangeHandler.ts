@@ -4,6 +4,8 @@ import loginHandler from './loginHandler'
 import logoutHandler from './logoutHandler'
 import restoreHandler from './restoreHandler'
 
+import sendUpdate from '@/server/websocket/sendUpdate'
+
 /**
  * The startup variable is necessary for the initial auth state change
  * to trigger the reauthentication if there is a stored user credential
@@ -19,4 +21,7 @@ auth.onAuthStateChanged(async user => {
     if (user) loginHandler(user)
     else logoutHandler()
   }
+
+  // Broadcast Application change to clients
+  sendUpdate()
 })
