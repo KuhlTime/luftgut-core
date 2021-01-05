@@ -2,18 +2,15 @@
  * A message is a standarized model to send data between the
  * server and the client. The data of the message can vary.
  */
-export default class Message<T> {
-  /**
-   * The date the message was created (send)
-   */
+export default class Message {
   created: Date = new Date()
 
   /**
-   * The data that should be send with this message
+   * Convert a plain JavaScript object into a `Message` object
+   * @url See *Titian Cernicova-Dragomir*s Answer: https://stackoverflow.com/a/50342951/4179020
+   * @param obj The plain JSON object
    */
-  data: T
-
-  constructor(data: T) {
-    this.data = data
+  static toClass<T>(this: new () => T, obj: Record<string, unknown>): T {
+    return Object.assign(new this(), obj)
   }
 }

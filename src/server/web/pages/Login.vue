@@ -38,11 +38,8 @@
 import Container from '../components/Container'
 import Spinner from '../components/Spinner'
 
-import LoginPayload from '../models/LoginPayload'
-
-String.prototype.isEmpty = function () {
-  return this.length === 0
-}
+import socket from '../websocket'
+import { Message, Login } from '../../../models/messages'
 
 export default {
   name: 'login',
@@ -56,23 +53,35 @@ export default {
   methods: {
     submit: function () {
       event.preventDefault()
-      this.$store.dispatch('login', this.loginPayload).then(success => {
-        if (success) {
-          this.$router.push({ name: 'Dashboard' })
-        }
-      })
+
+      if (!this.isValid) return
+
+      // const msg = new Message(this.loginPayload)
+      // socket.emit('login', msg)
     }
   },
   computed: {
+    /**
+     * Checks if the input is valid
+     * @returns {boolean} Returns a boolean that is true when the input is valid
+     */
     isValid: function () {
-      return !this.email.isEmpty() && !this.password.isEmpty()
+      return this.email.length !== 0 && this.password.length !== 0
     },
+
+    /**
+     * Return whether the page is loading
+     */
     isLoading: function () {
       // isAuthorized prevents the form to flash
       return this.$store.getters.isLoading || this.$store.getters.isAuthorized
     },
+
+    /**
+     * Generate the Message Payload
+     */
     loginPayload: function () {
-      return new LoginPayload(this.email, this.password)
+      return new Login(this.email, this.password)
     }
   }
 }

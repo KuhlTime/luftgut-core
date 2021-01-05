@@ -37,7 +37,6 @@
     "crypto-js": "^4.0.0",
     "express": "^4.17.1",
     "firebase": "^8.2.0",
-    "lodash": "^4.17.20",
     "lowdb": "^1.0.0",
     "normalize.css": "^8.0.1",
     "parcel-bundler": "^1.12.4",

@@ -1,6 +1,6 @@
 import Message from './Message'
-import Login from './Login'
-import Setup from './Setup'
-import Update from './Update'
+import LoginMessage from './LoginMessage'
+import SetupMessage from './SetupMessage'
+import UpdateMessage from './UpdateMessage'
 
-export { Message, Login, Setup, Update }
+export { Message, LoginMessage, SetupMessage, UpdateMessage }

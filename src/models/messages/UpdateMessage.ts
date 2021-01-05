@@ -1,3 +1,4 @@
+import Message from './Message'
 import { firebase } from '@/firebase'
 
 /**
@@ -7,10 +8,13 @@ import { firebase } from '@/firebase'
  * @warning Be carefull many of the objects may be undefined.
  * @warning Do not include any computation.
  */
-export default class Update {
+export default class UpdateMessage extends Message {
+  isAuthenticated: boolean
   user?: firebase.User
 
-  constructor(user?: firebase.User) {
+  constructor(isAuthenticated: boolean, user?: firebase.User) {
+    super()
+    this.isAuthenticated = isAuthenticated
     this.user = user
   }
 }

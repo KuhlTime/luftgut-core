@@ -6,6 +6,6 @@ import { Message } from '@/models/messages'
  * @param event The name of the event
  * @param message {Message} The Message that should be broadcasted
  */
-export default function broadcast(event: string, data: unknown): void {
-  io.emit(event, new Message(data))
+export default function broadcast(event: string, message: Message): void {
+  io.emit(event, message)
 }

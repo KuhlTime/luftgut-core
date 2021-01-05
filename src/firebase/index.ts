@@ -34,8 +34,8 @@ export const capabilities = db.collection('capabilities')
 
 export const auth = firebase.auth()
 
-export const getCurrentUser = (): firebase.User => {
-  return auth.currentUser
+export const getCurrentUser = (): firebase.User | undefined => {
+  return auth.currentUser || undefined
 }
 
 export const isLoggedIn = (): boolean => {
