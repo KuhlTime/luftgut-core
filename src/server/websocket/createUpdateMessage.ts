@@ -1,4 +1,4 @@
-import * as fb from './index'
+import * as fb from '@/firebase'
 import * as Message from '@/models/messages'
 
 /**
