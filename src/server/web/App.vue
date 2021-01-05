@@ -24,20 +24,6 @@ export default {
   },
   mounted() {
     this.$store.commit('setLoading')
-
-    this.$store.dispatch('fetchUser').then(success => {
-      if (success) {
-        console.log('App: Redirect')
-
-        // Fake loading time to prevent flash
-        setTimeout(
-          () => {
-            this.$router.push({ name: 'Dashboard' })
-          },
-          env === 'development' ? 0 : 2000
-        )
-      }
-    })
   }
 }
 </script>
