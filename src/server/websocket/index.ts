@@ -22,12 +22,15 @@ const options = {
 const io = new Server(options)
 
 io.on('connection', socket => {
-  better.info(`Established new connection: ${socket.id}`)
+  better.info(`Connected to: ${socket.id}`)
 
   // Send initial update
   sendUpdate()
 
   // Event Handlers
+  socket.on('disconnect', () => {
+    better.info(`Disconnected from: ${socket.id}`)
+  })
   socket.on('login', handler.onLogin)
   socket.on('logout', handler.onLogout)
 })
