@@ -43,3 +43,9 @@ Führt die Datei aus und achtet auf Änderungen an dem `src` Verzeichnis.
 
 `dev:lint`<br>
 Führt bei jeder Änderung zunächst den `lint` Befehl aus.
+
+## Socket.io Verbindung testen
+
+Ist CORS ([Cross-Origin Ressource Sharing](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)) aktiviert kann eine Vebindung zum Socket.io Server von jeder beliebigen Webaddresse hergestellet werden. `src/server/websocket/index.ts`
+
+Socket.io Tester: https://hoppscotch.io/de/realtime/

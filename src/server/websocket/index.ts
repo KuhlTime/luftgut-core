@@ -10,7 +10,11 @@ const better = new Logger('Socket.io')
  * See avaialable options:
  * https://socket.io/docs/v3/server-api/#new-Server-httpServer-options
  */
-const options = {}
+const options = {
+  cors: {
+    origin: '*'
+  }
+}
 
 /**
  * socket.io server
