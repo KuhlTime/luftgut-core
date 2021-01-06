@@ -10,5 +10,5 @@ socket.on('update', msg => {
 
 socket.on('error', msg => {
   const errorMessage = ErrorMessage.toClass(msg)
-  console.error(error)
+  console.error(errorMessage.error)
 })
