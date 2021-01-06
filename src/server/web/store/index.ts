@@ -1,37 +1,43 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { Message, Update } from '@/models/messages'
+import { UpdateMessage } from '../../../models/messages'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    user: undefined as undefined | Message<Update>,
-    loading: false
+    updateMessage: undefined as UpdateMessage | undefined,
+    loading: true
   },
 
   mutations: {
-    setUser: (state, user) => {
-      state.user = user
+    setUpdateMessage: (state, message: UpdateMessage) => {
+      state.updateMessage = message
+      console.log('Recived Update')
     },
     setLoading: state => {
       state.loading = true
     },
     setIdle: state => {
       state.loading = false
+    },
+    setLoading: (state, on: boolean) => {
+      state.loading = on
     }
   },
 
   actions: {},
 
   getters: {
-    isAuthorized: function (state) {
-      return state.user !== undefined
+    isAuthorized(state): boolean {
+      return state.updateMessage?.isAuthenticated ?? false
     },
-    isLoading: function (state) {
-      console.log(state.loading)
+    isLoading(state): boolean {
       return state.loading
+    },
+    isUpdateMessageAvailable(state): boolean {
+      return state.updateMessage !== undefined
     }
   }
 })

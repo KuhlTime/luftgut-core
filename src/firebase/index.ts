@@ -39,7 +39,7 @@ export const getCurrentUser = (): firebase.User | undefined => {
 }
 
 export const isLoggedIn = (): boolean => {
-  return getCurrentUser() !== null
+  return Boolean(getCurrentUser())
 }
 
 // === STORAGE ===

@@ -7,13 +7,28 @@
       <form class="center" @submit="submit">
         <h1>Willkommen</h1>
         <p>Logge dich mit deinem Luftgut Account ein.</p>
-        <input type="email" v-model="email" name="Email" :disabled="isLoading" />
+        <input
+          type="email"
+          v-model="email"
+          name="Email"
+          placeholder="E-Mail"
+          :disabled="isLoading"
+        />
         <br />
-        <input type="password" v-model="password" name="Password" :disabled="isLoading" />
+        <input
+          type="password"
+          v-model="password"
+          name="Password"
+          placeholder="Passwort"
+          :disabled="isLoading"
+        />
         <br />
         <button type="submit" @submit="submit" :disabled="!isValid">
           <spinner class="loading-spinner" v-if="isLoading"></spinner>
           <span v-if="!isLoading">Login</span>
+        </button>
+        <button @click="enterDemo">
+          <span v-if="!isLoading">Demo Account</span>
         </button>
       </form>
       <div class="bottom">
@@ -39,7 +54,7 @@ import Container from '../components/Container'
 import Spinner from '../components/Spinner'
 
 import socket from '../websocket'
-import { Message, Login } from '../../../models/messages'
+import { LoginMessage } from '../../../models/messages'
 
 export default {
   name: 'login',
@@ -56,8 +71,16 @@ export default {
 
       if (!this.isValid) return
 
-      // const msg = new Message(this.loginPayload)
-      // socket.emit('login', msg)
+      this.$store.commit('setLoading', true)
+
+      setTimeout(() => {
+        const loginMessage = new LoginMessage(this.email, this.password)
+        socket.emit('login', loginMessage)
+      }, 2000)
+    },
+    enterDemo: function () {
+      this.email = 'andre.kuhlmann@study.hs-duesseldorf.de'
+      this.password = '12345678'
     }
   },
   computed: {
@@ -74,7 +97,7 @@ export default {
      */
     isLoading: function () {
       // isAuthorized prevents the form to flash
-      return this.$store.getters.isLoading || this.$store.getters.isAuthorized
+      return this.$store.getters.isLoading
     },
 
     /**

@@ -33,6 +33,7 @@ io.on('connection', socket => {
   })
   socket.on('login', handler.onLogin)
   socket.on('logout', handler.onLogout)
+  socket.on('update', handler.onUpdate)
 })
 
 /**

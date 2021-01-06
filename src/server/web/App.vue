@@ -22,9 +22,7 @@ export default {
       return this.$route.meta.showNavbar
     }
   },
-  mounted() {
-    this.$store.commit('setLoading')
-  }
+  mounted() {}
 }
 </script>
 

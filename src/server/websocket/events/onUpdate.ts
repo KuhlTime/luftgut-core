@@ -1,12 +1,12 @@
 import { Logger } from '@/lib/betterLog'
-import { auth } from '@/firebase'
+import sendUpdate from '../sendUpdate'
 
 const better = new Logger('Socket.io')
 
 /**
- * Logout Handler
+ * Login Handler
  */
 export default (): void => {
-  better.info('Message: Logout')
-  auth.signOut()
+  better.info('Message: Force Update')
+  sendUpdate()
 }
