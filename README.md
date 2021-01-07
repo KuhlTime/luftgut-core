@@ -48,6 +48,6 @@ Führt bei jeder Änderung zunächst den `lint` Befehl aus.
 
 Ist CORS ([Cross-Origin Ressource Sharing](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)) aktiviert kann eine Vebindung zum Socket.io Server von jeder beliebigen Webaddresse hergestellet werden. `src/server/websocket/index.ts`
 
-Socket.io Tester: https://hoppscotch.io/de/realtime/
-Addresse: `wss://<IP-Addresse>`
+Socket.io Tester: https://hoppscotch.io/de/realtime/<br>
+Addresse: `wss://<IP-Addresse>`<br>
 Pfad: `/socket.io` (Standard)
