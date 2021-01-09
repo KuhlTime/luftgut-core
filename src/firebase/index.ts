@@ -30,6 +30,17 @@ export const db = firebase.firestore()
 export const stations = db.collection('stations')
 export const capabilities = db.collection('capabilities')
 
+/**
+ * Returns a `boolean` wether a station with the provided id exists
+ * @param id The id of the station
+ */
+export const checkStationExists = async (id: string): Promise<boolean> => {
+  const documentReference = stations.doc(id)
+  const doc = await documentReference.get()
+
+  return doc.exists
+}
+
 // === AUTH ===
 
 export const auth = firebase.auth()

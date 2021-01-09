@@ -4,7 +4,7 @@ import createUpdateMessage from '@/server/websocket/createUpdateMessage'
 /**
  * This sends updated information to all connected clients
  */
-export default function update(): void {
+export default async function update(): Promise<void> {
   // Bundle update
-  broadcast('update', createUpdateMessage())
+  broadcast('update', await createUpdateMessage())
 }

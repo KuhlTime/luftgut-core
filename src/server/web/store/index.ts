@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     setUpdateMessage: (state, message: UpdateMessage) => {
       state.updateMessage = message
       console.log('Recived Update')
+      console.dir(message)
     },
     setLoading: state => {
       state.loading = true

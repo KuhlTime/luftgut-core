@@ -10,12 +10,23 @@ import { firebase } from '@/firebase'
  * @warning Do not include any computation.
  */
 export default class UpdateMessage extends Message {
+  // TODO: Add comments
   isAuthenticated: boolean
   user?: firebase.User
+  isStationSetup: boolean
+  deviceId: string
 
-  constructor(isAuthenticated: boolean, user?: firebase.User) {
+  constructor(
+    isAuthenticated: boolean,
+    isStationSetup: boolean,
+    deviceId: string,
+    user?: firebase.User
+  ) {
     super()
+
     this.isAuthenticated = isAuthenticated
     this.user = user
+    this.isStationSetup = isStationSetup
+    this.deviceId = deviceId
   }
 }
