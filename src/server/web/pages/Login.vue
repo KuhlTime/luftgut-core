@@ -249,6 +249,12 @@ button {
   max-width: 200px;
 }
 
+@media (max-width: 500px) {
+  #logo {
+    display: none;
+  }
+}
+
 .btn {
   // Cursor
   cursor: pointer;
