@@ -4,3 +4,6 @@
 // Start Webserver
 import './server'
 import './firebase/auth-state/authStateChangeHandler'
+
+// Start Station
+import './station'

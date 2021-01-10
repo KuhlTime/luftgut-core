@@ -6,5 +6,6 @@ import createUpdateMessage from '@/server/websocket/createUpdateMessage'
  */
 export default async function update(): Promise<void> {
   // Bundle update
-  broadcast('update', await createUpdateMessage())
+  const message = await createUpdateMessage()
+  broadcast('update', message)
 }

@@ -5,6 +5,9 @@ import router from '../router'
 
 const socket = io()
 
+/**
+ * Performed when update event is recieved
+ */
 socket.on('update', msg => {
   const updateMessage = UpdateMessage.toClass(msg)
 
@@ -26,9 +29,22 @@ socket.on('update', msg => {
   }
 })
 
+/**
+ * An error has been send
+ */
 socket.on('error', msg => {
   const errorMessage = ErrorMessage.toClass(msg)
   console.error(errorMessage.error)
+})
+
+/**
+ * On server disconnect
+ */
+socket.on('disconnect', () => {
+  console.warn('Disconnected from Server')
+  store.commit('setUpdateMessage', undefined)
+
+  router.push({ name: 'Login' })
 })
 
 export default socket

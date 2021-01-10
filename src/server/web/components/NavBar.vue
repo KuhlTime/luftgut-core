@@ -46,10 +46,10 @@ export default {
   text-align: left;
 
   // Background
-  // background-image: url('../assets/bg.svg');
-  // background-repeat: repeat-x;
-  // background-size: contain, cover;
-  background-color: #444;
+  background-image: url('../assets/bg.svg');
+  background-repeat: repeat-x;
+  background-size: contain, cover;
+  // background-color: #444;
 }
 
 #logo {
@@ -58,10 +58,11 @@ export default {
 
 .title {
   font-weight: 500;
-  background-color: rgba(white, 0.3);
+  background-color: rgba(white, 1);
   padding: 3px 18px;
   padding-top: 4px;
   border-radius: 50vh;
+  color: #000;
 }
 
 .even-width {

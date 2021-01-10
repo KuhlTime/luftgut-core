@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import store from './store'
 
 import Dashboard from './pages/Dashboard'
+import Login from './pages/Login'
 
 Vue.use(Router)
 
@@ -20,7 +21,7 @@ const router = new Router({
     {
       path: '/login',
       name: 'Login',
-      component: () => import('./pages/Login'),
+      component: Login
       meta: {
         showNavbar: false
       }

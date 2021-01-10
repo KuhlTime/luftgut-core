@@ -1,4 +1,4 @@
-import { DataHook } from '../models'
+import { DataHook } from '../../models'
 
 /**
  * Returns a random number between 0 and 100

@@ -12,7 +12,7 @@ const store = new Vuex.Store({
   },
 
   mutations: {
-    setUpdateMessage: (state, message: UpdateMessage) => {
+    setUpdateMessage: (state, message: UpdateMessage | undefined) => {
       state.updateMessage = message
       console.log('Recived Update')
       console.dir(message)
@@ -39,6 +39,9 @@ const store = new Vuex.Store({
     },
     isUpdateMessageAvailable(state): boolean {
       return state.updateMessage !== undefined
+    },
+    updateMessage(state): UpdateMessage | undefined {
+      return state.updateMessage
     }
   }
 })
