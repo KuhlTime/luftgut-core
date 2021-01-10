@@ -8,7 +8,7 @@
     </p>
     <prism-editor
       class="my-editor"
-      v-model="code"
+      :value="code"
       :highlight="highlighter"
       line-numbers
     ></prism-editor>
@@ -37,18 +37,25 @@ export default {
       required: true
     }
   },
-  data: () => ({ code: '' }),
   computed: {
-    hooks: function () {
-      return this.data.hooks
+    data: function () {
+      return this.$store.state.updateMessage
+    },
+    hook: function () {
+      return this.data.hooks.filter(h => h.id === this.capability.id)[0]
+    },
+    id: function () {
+      if (!this.hook) return ''
+      return this.hook.id ?? ''
+    },
+    code: function () {
+      if (!this.hook) return ''
+      return this.hook.code ?? ''
     }
   },
   methods: {
     highlighter(code) {
       return highlight(code, languages.js) // languages.<insert language> to return html with markup
-    },
-    updateValue(value) {
-      this.$emit('input', value)
     }
   }
 }

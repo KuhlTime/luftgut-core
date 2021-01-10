@@ -29,6 +29,7 @@ export default {
   top: 0;
   left: 0;
   padding: 6px 12px;
+  z-index: 100;
 
   // Dipslay
   display: flex;
@@ -50,6 +51,7 @@ export default {
   background-repeat: repeat-x;
   background-size: contain, cover;
   // background-color: #444;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
 }
 
 #logo {

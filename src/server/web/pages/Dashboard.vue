@@ -12,12 +12,20 @@
         </card>
         <card title="WLAN">
           <p>Vebunden mit: <span class="monospace">24.ERROR</span></p>
+          <p>IP: <span class="monospace">192.168.178.123</span></p>
         </card>
       </div>
       <button id="forceUpdateBtn">Upload Auslösen</button>
       <div class="divider">
-        <h3>Hooks</h3>
+        <h3>Data Hooks</h3>
       </div>
+      <p class="explenation">
+        Trage hier die Funktion ein die du verwenden möchtest um deinen Wert zu erhalten. Deiner
+        Kreativität sind hier keine Grenzen gesetzt!
+        <br />
+        <br />
+        <a>Mehr Infos zu den Data Hooks</a>
+      </p>
       <div class="grid x1">
         <hook
           v-for="capability in capabilities"
@@ -54,7 +62,12 @@ export default {
 
 <style lang="scss" scoped>
 #dashboard {
+  position: absolute;
+
   // Display
+  height: calc(100% - 42px);
+  width: 100%;
+  box-sizing: border-box;
   overflow-y: scroll;
 }
 
@@ -110,10 +123,25 @@ export default {
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   font-weight: 600;
-  transition: all ease-in-out 300ms;
+  transition: all ease-in-out 180ms;
 
   &:hover {
     background-color: #2980b9;
+  }
+}
+
+.explenation {
+  color: rgba(black, 0.4);
+}
+
+a {
+  text-decoration: none;
+  color: #666;
+  transition: all ease-in-out 180ms;
+  cursor: pointer;
+
+  &:hover {
+    color: #000;
   }
 }
 </style>

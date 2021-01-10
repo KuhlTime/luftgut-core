@@ -29,7 +29,7 @@ export default class Station {
    */
   constructor() {
     // Activate timer
-    const seconds = 15
+    const seconds = 60
 
     // Bind this (station) to the update message otherwise the update function will
     // use the timer as the binding and will not have access to the stations methods
