@@ -43,6 +43,7 @@ socket.on('error', msg => {
 socket.on('disconnect', () => {
   console.warn('Disconnected from Server')
   store.commit('setUpdateMessage', undefined)
+  store.commit('setLoading')
 
   router.push({ name: 'Login' })
 })

@@ -8,7 +8,7 @@
     </p>
     <prism-editor
       class="my-editor"
-      :value="code"
+      v-model="hook.code"
       :highlight="highlighter"
       line-numbers
     ></prism-editor>
@@ -37,6 +37,7 @@ export default {
       required: true
     }
   },
+  data: () => ({ initialStart: true }),
   computed: {
     data: function () {
       return this.$store.state.updateMessage
@@ -55,7 +56,18 @@ export default {
   },
   methods: {
     highlighter(code) {
+      // Prevent the code from beeing transmitter on initial load
+      if (!this.initialStart) {
+        this.initialStart = false
+      } else {
+        this.changeHandler(code)
+      }
+
       return highlight(code, languages.js) // languages.<insert language> to return html with markup
+    },
+    changeHandler(code) {
+      console.log('updated')
+      this.hook.code = code
     }
   }
 }

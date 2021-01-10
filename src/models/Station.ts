@@ -49,7 +49,7 @@ export default class Station {
     const hooks: ClientHook[] = []
 
     this.managers.forEach(manager => {
-      hooks.push(new ClientHook(manager.capabilityReference.id, manager.getData.toString()))
+      hooks.push(new ClientHook(manager.capabilityReference.id, manager.getData.toString(), true))
     })
 
     return hooks

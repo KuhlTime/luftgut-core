@@ -1,7 +1,7 @@
 <template>
   <nav id="navbar">
     <img id="logo" src="../assets/logo.svg" class="even-width" />
-    <span class="title">{{ title }}</span>
+    <span v-if="showTitle" class="title">{{ title }}</span>
     <div class="even-width"></div>
   </nav>
 </template>
@@ -16,7 +16,14 @@ export default {
   },
   computed: {
     title: function () {
-      return this.$route.name
+      if (this.$route.name !== 'Login') {
+        return this.$route.name
+      } else {
+        return undefined
+      }
+    },
+    showTitle: function () {
+      return this.title !== undefined
     }
   }
 }
