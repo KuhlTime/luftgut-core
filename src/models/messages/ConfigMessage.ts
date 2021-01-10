@@ -1,5 +1,5 @@
 import Message from './Message'
-import { ClientHook } from '../'
+import { Hook } from '../'
 
 /**
  * This is the configuration message which either gets send on the
@@ -8,9 +8,9 @@ import { ClientHook } from '../'
  * @warning Do not include any computation.
  */
 export default class ConfigMessage extends Message {
-  hooks: ClientHook[]
+  hooks: Hook[]
 
-  constructor(hooks: ClientHook[]) {
+  constructor(hooks: Hook[]) {
     super()
 
     this.hooks = hooks

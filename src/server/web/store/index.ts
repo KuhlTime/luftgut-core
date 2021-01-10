@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { UpdateMessage } from '../../../models/messages'
-import { ClientHook } from '../../../models'
 
 Vue.use(Vuex)
 

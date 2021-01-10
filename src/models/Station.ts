@@ -1,5 +1,5 @@
-import { firebase, checkStationExists, stations } from '../firebase'
-import { CapabilityManager, ClientHook } from './'
+import { firebase, checkStationExists, stations, capabilities } from '../firebase'
+import { Hook } from './'
 import Datapoint from './Datapoint'
 import getUniqueDeviceNumber from '@/lib/deviceNumber'
 
@@ -11,9 +11,9 @@ export default class Station {
   /* ------------------------------- Properties ------------------------------- */
 
   /**
-   * A list of active `CapabilityManagers`
+   * A list of managed hooks
    */
-  managers: CapabilityManager<any>[] = []
+  hooks: Hook[] = []
 
   /**
    * The reference to the interval timer
@@ -24,8 +24,6 @@ export default class Station {
 
   /**
    * Creates a new station instance
-   * @param reference The firestore reference to the station
-   * @param initManagers Optionally provide an array of `CapabilityManagers`.
    */
   constructor() {
     // Activate timer
@@ -34,25 +32,21 @@ export default class Station {
     // Bind this (station) to the update message otherwise the update function will
     // use the timer as the binding and will not have access to the stations methods
     this.timer = setInterval(this.update.bind(this), seconds * 1000)
+
+    capabilities.get().then(snapshots => {
+      // FIXME: This may fail if the update gets send immediately
+      // TODO: Check for new Capabilites
+      snapshots.forEach(capabilitySnapshot => {
+        const newHook = new Hook(capabilitySnapshot, '', false)
+        this.add(newHook)
+      })
+    })
   }
 
   /* -------------------------------- Computed -------------------------------- */
 
-  get hasActiveManagers(): boolean {
-    return this.managers.length > 0
-  }
-
-  /**
-   * Creates a object for each manager. To work with clientside
-   */
-  get hooks(): ClientHook[] {
-    const hooks: ClientHook[] = []
-
-    this.managers.forEach(manager => {
-      hooks.push(new ClientHook(manager.capabilityReference.id, manager.getData.toString(), true))
-    })
-
-    return hooks
+  get hasActiveHooks(): boolean {
+    return this.hooks.filter(h => h.active).length > 0
   }
 
   /* --------------------------------- Methods -------------------------------- */
@@ -98,56 +92,21 @@ export default class Station {
   }
 
   /**
-   * Add a new `CapabilityManager` that should be called when the station updates.
-   * In case a manager for the defined Capability already exists the one gets overwritten.
-   * @param newManager The manager that should be activated
-   * @param overwrite Should a already existing manager be overwritten
-   * @returns Returns whether the manager has been activated or not
+   * This adds or updates a hook for a capability
    */
-  activate(newManager: CapabilityManager<any>, overwrite = true): boolean {
-    // Check that there not already exists a manager for a given capability.
-    // In case there is the one gets replaced by the new one
-    this.managers.forEach((manager, index) => {
-      if (manager.capabilityId == newManager.capabilityId) {
-        if (overwrite) {
-          // replace pre existing manager
-          this.managers[index] = newManager
-          return true
-        } else {
-          // pre existing manager has not been overwritten
-          return false
-        }
-      } else {
-        return false
-      }
-    })
+  add(hook: Hook): void {
+    const index = this.indexOf(hook)
 
-    // If the manager doesn't already exist, activate the newManager
-    this.managers.push(newManager)
-
-    // TODO: Broadcast Update
-
-    return true
-  }
-
-  /**
-   * Remove a `CapabilityManager` so it o longer gets called on `update`.
-   */
-  deactivate(manager: CapabilityManager<any>): void {
-    const index = this.managers.indexOf(manager)
-
-    if (index > -1) {
-      this.managers.splice(index, 1)
+    if (index) {
+      this.hooks[index] = hook
+    } else {
+      this.hooks.push(hook)
     }
   }
 
-  /**
-   * Remove a `CapabilityManager` by its id.
-   * @param id The uuid of the hook to be removed.
-   */
-  deactivateByUuid(uuid: string): void {
-    const manager: CapabilityManager<any> | undefined = this.managers.find(m => m.uuid === uuid)
-    if (manager) this.deactivate(manager)
+  indexOf(hook: Hook): number | undefined {
+    const index = this.hooks.findIndex(h => h.capability.id === hook.capability.id)
+    return index === -1 ? undefined : index
   }
 
   /**
@@ -161,30 +120,22 @@ export default class Station {
       return
     }
 
-    // In case there are no managers active skip the update process
-    if (!this.hasActiveManagers) {
-      // console.log('No active managers. Skip upload.')
-      return
-    }
+    const activeHooks = this.hooks.filter(h => h.active)
 
     const datapoint = new Datapoint()
 
-    // get the data for each registered manager
-    for (const manager of this.managers) {
-      // This gets the data from the sensor
-      const data = await manager.getData()
+    // get the data for each active hook
+    for (const hook of activeHooks) {
+      // When the hook is invalid skip to the next hook
+      if (!hook.isValid) continue
 
-      // Guard that the data type matches the one specified inside fb capability
-      // in case it does match proceed
-      if (!manager.typeCheck(typeof data)) {
-        throw Error(
-          `Manager return type doesn't match required return type for ${manager.capabilityReference.id}`
-        )
-        return
-      }
+      // This gets the data from the sensor
+      const data = await hook.getData()
+
+      // TODO: Check the hook return the right type
 
       // Add data to the datapoint
-      datapoint.addData(manager.capabilityId, data)
+      datapoint.addData(hook.capability.id, data)
     }
 
     // Guard that the datapoint is not empty
@@ -194,7 +145,7 @@ export default class Station {
     }
 
     const datapointReference = await this.getDatapointReference()
-    await datapointReference.doc(datapoint.documentId).set(datapoint.toObject())
+    await datapointReference.doc(datapoint.documentId).set(datapoint)
 
     console.log('New datapoint uploaded.')
   }

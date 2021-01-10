@@ -1,5 +1,5 @@
 import Message from './Message'
-import { Capability, ClientHook } from '@/models'
+import { Hook } from '@/models'
 import { firebase } from '@/firebase'
 
 /**
@@ -16,15 +16,13 @@ export default class UpdateMessage extends Message {
   user?: firebase.User
   isStationSetup: boolean
   deviceId: string
-  capabilities: Capability[]
-  hooks: ClientHook[]
+  hooks: Hook[]
 
   constructor(
     isAuthenticated: boolean,
     isStationSetup: boolean,
     deviceId: string,
-    capabilities: Capability[],
-    hooks: ClientHook[],
+    hooks: Hook[],
     user?: firebase.User
   ) {
     super()
@@ -32,7 +30,6 @@ export default class UpdateMessage extends Message {
     this.isAuthenticated = isAuthenticated
     this.user = user
     this.isStationSetup = isStationSetup
-    this.capabilities = capabilities
     this.hooks = hooks
     this.deviceId = deviceId
   }
