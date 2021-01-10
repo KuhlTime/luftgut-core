@@ -15,23 +15,20 @@
           <p>IP: <span class="monospace">192.168.178.123</span></p>
         </card>
       </div>
-      <button id="forceUpdateBtn">Upload Auslösen</button>
+      <button id="forceUpdateButton" class="btn" @click="forceUpload">Upload Auslösen</button>
+      <button id="logoutButton" class="btn" @click="logout">Logout</button>
       <div class="divider">
         <h3>Data Hooks</h3>
       </div>
-      <p class="explenation">
+      <p class="subtitle">
         Trage hier die Funktion ein die du verwenden möchtest um deinen Wert zu erhalten. Deiner
         Kreativität sind hier keine Grenzen gesetzt!
         <br />
         <br />
         <a>Mehr Infos zu den Data Hooks</a>
       </p>
-      <div class="grid x1">
-        <hook
-          v-for="capability in capabilities"
-          :key="capability.id"
-          :capability="capability"
-        ></hook>
+      <div class="grid x1" v-if="renderComponent">
+        <hook v-for="hook in hooks" :key="hook.capability.id" :hook="hook"></hook>
       </div>
     </container>
   </div>
@@ -42,6 +39,8 @@ import Container from '../components/Container'
 import CardView from '../components/CardView'
 import HookView from '../components/HookView'
 
+import io from '../websocket'
+
 export default {
   name: 'dashboard',
   components: {
@@ -49,12 +48,43 @@ export default {
     card: CardView,
     hook: HookView
   },
+  data: () => ({
+    renderComponent: true
+  }),
+  created() {
+    this.unwatch = this.$store.watch(
+      state => state.updateMessage,
+      () => {
+        this.forceRerender()
+      }
+    )
+  },
+  beforeDestroy() {
+    this.unwatch()
+  },
   computed: {
     data: function () {
       return this.$store.state.updateMessage
     },
-    capabilities: function () {
-      return this.data.capabilities
+    hooks: function () {
+      return this.data.hooks
+    }
+  },
+  methods: {
+    forceUpload() {
+      io.emit('forceUpload')
+    },
+    logout() {
+      io.emit('logout')
+    },
+    forceRerender() {
+      // Remove my-component from the DOM
+      this.renderComponent = false
+
+      this.$nextTick(() => {
+        // Add the component back in
+        this.renderComponent = true
+      })
     }
   }
 }
@@ -111,7 +141,7 @@ export default {
   margin-top: 42px;
 }
 
-#forceUpdateBtn {
+.btn {
   width: 100%;
   height: 42px;
   line-height: 42px;
@@ -128,9 +158,21 @@ export default {
   &:hover {
     background-color: #2980b9;
   }
+
+  &:not(:first-of-type) {
+    margin-top: 12px;
+  }
 }
 
-.explenation {
+#logoutButton {
+  background-color: #e74c3c;
+
+  &:hover {
+    background-color: #c0392b;
+  }
+}
+
+.subtitle {
   color: rgba(black, 0.4);
 }
 

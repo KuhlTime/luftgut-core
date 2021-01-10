@@ -1,7 +1,10 @@
-import { firebase, checkStationExists, stations, capabilities } from '../firebase'
+import { firebase, checkStationExists, stations, capabilities, isLoggedIn } from '../firebase'
 import { Hook } from './'
 import Datapoint from './Datapoint'
 import getUniqueDeviceNumber from '@/lib/deviceNumber'
+import { Logger } from '@/lib/betterLog'
+
+const better = new Logger('Station')
 
 /**
  * The station class communicates with the firestore database and manages available
@@ -97,7 +100,7 @@ export default class Station {
   add(hook: Hook): void {
     const index = this.indexOf(hook)
 
-    if (index) {
+    if (index !== undefined) {
       this.hooks[index] = hook
     } else {
       this.hooks.push(hook)
@@ -109,14 +112,27 @@ export default class Station {
     return index === -1 ? undefined : index
   }
 
+  updateHooks(hooks: Hook[]): void {
+    hooks.forEach(hook => this.add(hook))
+  }
+
+  async runHook(hook: Hook): Promise<any> {
+    return eval(`(async () => { ${hook.code} })()`)
+  }
+
   /**
    * Retrives all hooks and updates the data inside the database.
    */
   async update(): Promise<void> {
+    // When no user is logged in skip the update
+    if (!isLoggedIn) {
+      return
+    }
+
     // Check if station is setup correctly
     const stationExists = await this.stationExists()
     if (!stationExists) {
-      console.log('The Station is not setup correctly')
+      better.info('The Station is not setup correctly')
       return
     }
 
@@ -127,12 +143,10 @@ export default class Station {
     // get the data for each active hook
     for (const hook of activeHooks) {
       // When the hook is invalid skip to the next hook
-      if (!hook.isValid) continue
+      // if (!hook.isValid) continue
 
       // This gets the data from the sensor
-      const data = await hook.getData()
-
-      // TODO: Check the hook return the right type
+      const data = await this.runHook(hook)
 
       // Add data to the datapoint
       datapoint.addData(hook.capability.id, data)
@@ -140,13 +154,13 @@ export default class Station {
 
     // Guard that the datapoint is not empty
     if (datapoint.isEmpty) {
-      console.log('Datapoint has no data. Skip upload.')
+      better.info('Datapoint has no data. Skip upload.')
       return
     }
 
     const datapointReference = await this.getDatapointReference()
-    await datapointReference.doc(datapoint.documentId).set(datapoint)
+    await datapointReference.doc(datapoint.documentId).set(datapoint.toObject())
 
-    console.log('New datapoint uploaded.')
+    better.info('Uploaded new Datapoint')
   }
 }

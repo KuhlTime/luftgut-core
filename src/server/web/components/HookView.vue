@@ -1,22 +1,31 @@
 <template>
-  <card class="hook" :title="capability.nameDe">
-    <p v-if="capability.unit">
-      Einheit: <code>{{ capability.unit }}</code>
+  <card class="hook" :title="name">
+    <p v-if="unit">
+      Einheit: <code>{{ unit }}</code>
     </p>
     <p>
-      Erwarteter Rückgabewert: <code>{{ capability.type }}</code>
+      Erwarteter Rückgabewert: <code>{{ type }}</code>
     </p>
+    <p><input type="checkbox" v-model="active" /> {{ activeText }}</p>
     <prism-editor
       class="my-editor"
-      v-model="hook.code"
+      v-model="code"
       :highlight="highlighter"
       line-numbers
     ></prism-editor>
+    <!-- {{ hook.code }} -->
+    <!--<button id="testButton" class="btn">Testen</button>-->
+    <button @click="save" id="uploadButton" class="btn" v-if="hookHasChanged" :disabled="uploading">
+      Speichern
+    </button>
     <slot></slot>
   </card>
 </template>
 
 <script>
+import io from '../websocket'
+import { HookUpdateMessage } from '../../../models/messages'
+
 import Card from './CardView'
 
 import { PrismEditor } from 'vue-prism-editor'
@@ -32,32 +41,45 @@ export default {
   name: 'hook',
   components: { card: Card, PrismEditor },
   props: {
-    capability: {
+    hook: {
       type: Object,
       required: true
     }
   },
-  data: () => ({ initialStart: true }),
+  data: () => ({
+    initialStart: true,
+    code: '',
+    active: false,
+    uploading: false
+  }),
   computed: {
-    data: function () {
-      return this.$store.state.updateMessage
+    hookHasChanged: function () {
+      return this.code !== this.hook.code || this.active !== this.hook.active
     },
-    hook: function () {
-      return this.data.hooks.filter(h => h.id === this.capability.id)[0]
+    capability: function () {
+      return this.hook.capability
     },
-    id: function () {
-      if (!this.hook) return ''
-      return this.hook.id ?? ''
+    name: function () {
+      return this.capability.nameDe
     },
-    code: function () {
-      if (!this.hook) return ''
-      return this.hook.code ?? ''
+    unit: function () {
+      return this.capability.unit
+    },
+    type: function () {
+      return this.capability.type
+    },
+    activeText: function () {
+      return this.active ? 'Aktiviert' : 'Deaktiviert'
     }
+  },
+  created: function () {
+    this.code = this.hook.code
+    this.active = this.hook.active
   },
   methods: {
     highlighter(code) {
       // Prevent the code from beeing transmitter on initial load
-      if (!this.initialStart) {
+      if (this.initialStart) {
         this.initialStart = false
       } else {
         this.changeHandler(code)
@@ -65,9 +87,18 @@ export default {
 
       return highlight(code, languages.js) // languages.<insert language> to return html with markup
     },
+    save() {
+      if (!this.hookHasChanged) return
+      this.uploading = true
+
+      const updatedHook = this.hook
+      updatedHook.active = this.active
+      updatedHook.code = this.code
+
+      io.emit('hookUpdate', new HookUpdateMessage([updatedHook]))
+    },
     changeHandler(code) {
-      console.log('updated')
-      this.hook.code = code
+      //
     }
   }
 }
@@ -79,6 +110,7 @@ export default {
   /* we dont use `language-` classes anymore so thats why we need to add background and text color manually */
   background: #2d2d2d;
   color: #ccc;
+  box-sizing: border-box;
 
   border-radius: 4px;
 
@@ -94,7 +126,27 @@ export default {
   outline: none;
 }
 
+code {
+  font-weight: 600;
+}
+
 p {
   margin-bottom: 8px;
+}
+
+.btn {
+  width: 100%;
+  height: 30px;
+  margin-top: 8px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: #3498db;
+  color: white;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #2980b9;
+  }
 }
 </style>

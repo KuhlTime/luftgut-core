@@ -5,6 +5,10 @@ import router from '../router'
 
 const socket = io()
 
+socket.on('connect', () => {
+  router.push({ name: 'Login' })
+})
+
 /**
  * Performed when update event is recieved
  */
@@ -45,7 +49,7 @@ socket.on('disconnect', () => {
   store.commit('setUpdateMessage', undefined)
   store.commit('setLoading')
 
-  router.push({ name: 'Login' })
+  router.push({ name: 'Disconnected' })
 })
 
 export default socket

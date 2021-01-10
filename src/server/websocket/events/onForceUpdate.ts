@@ -7,6 +7,6 @@ const better = new Logger('Socket.io')
  * Login Handler
  */
 export default (): void => {
-  better.info('Message: Force Update')
+  better.info('Message: Force Client Update')
   sendUpdate()
 }

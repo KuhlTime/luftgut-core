@@ -33,7 +33,9 @@ io.on('connection', socket => {
   })
   socket.on('login', handler.onLogin)
   socket.on('logout', handler.onLogout)
-  socket.on('update', handler.onUpdate)
+  socket.on('forceUpdate', handler.onForceUpdate)
+  socket.on('forceUpload', handler.onForceUpload)
+  socket.on('hookUpdate', handler.onHookUpdate)
 })
 
 /**

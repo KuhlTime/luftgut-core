@@ -26,20 +26,4 @@ export default class Hook {
     this.code = code
     this.active = active
   }
-
-  /**
-   * Checks if the entered code is valid
-   */
-  get isValid(): boolean {
-    // TODO: Add more rules
-    // For now check if the code contains the return keyword
-    return this.code.includes('return')
-  }
-
-  /**
-   * Perform the hook
-   */
-  async getData(): Promise<any> {
-    return await eval(`async (() => { ${this.code} })()`)
-  }
 }

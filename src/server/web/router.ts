@@ -4,6 +4,7 @@ import store from './store'
 
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
+import Disconnected from './pages/Disconnected'
 
 Vue.use(Router)
 
@@ -21,9 +22,17 @@ const router = new Router({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
       meta: {
         showNavbar: false
+      }
+    },
+    {
+      path: '/disconnected',
+      name: 'Disconnected',
+      component: Disconnected,
+      meta: {
+        showNavbar: true
       }
     },
     {
@@ -39,7 +48,10 @@ const router = new Router({
 
 // Authentication Guard
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'Login' && !store.getters.isAuthorized) next({ name: 'Login' })
+  if (to.name === 'Disconnected') {
+    console.log('Navigate to Disconnect')
+    next()
+  } else if (to.name !== 'Login' && !store.getters.isAuthorized) next({ name: 'Login' })
   else next()
 })
 
