@@ -43,7 +43,7 @@ export default class Datapoint {
    * @returns {boolean} Returns boolean
    */
   get isEmpty(): boolean {
-    return Object.keys(this.data).length === 0
+    return Object.keys(JSON.parse(JSON.stringify(this.data))).length === 0
   }
 
   /**

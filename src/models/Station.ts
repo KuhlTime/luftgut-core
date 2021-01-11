@@ -3,6 +3,8 @@ import { Hook } from './'
 import Datapoint from './Datapoint'
 import getUniqueDeviceNumber from '@/lib/deviceNumber'
 import { Logger } from '@/lib/betterLog'
+import broadcast from '../server/websocket/broadcast'
+import { ErrorMessage } from './messages'
 
 const better = new Logger('Station')
 
@@ -40,6 +42,8 @@ export default class Station {
       // FIXME: This may fail if the update gets send immediately
       // TODO: Check for new Capabilites
       snapshots.forEach(capabilitySnapshot => {
+        // TODO: Check for existing hooks
+
         const newHook = new Hook(capabilitySnapshot, '', false)
         this.add(newHook)
       })
@@ -117,7 +121,16 @@ export default class Station {
   }
 
   async runHook(hook: Hook): Promise<any> {
-    return eval(`(async () => { ${hook.code} })()`)
+    let value: any
+
+    try {
+      value = await eval(`(async () => { ${hook.code} })()`)
+    } catch (error) {
+      better.error(`Error while executing hook ${hook.capability.id}:\n${error}`)
+      broadcast('error', new ErrorMessage(error, hook.capability.id))
+    }
+
+    return value
   }
 
   /**
@@ -159,7 +172,16 @@ export default class Station {
     }
 
     const datapointReference = await this.getDatapointReference()
-    await datapointReference.doc(datapoint.documentId).set(datapoint.toObject())
+
+    try {
+      // In case the datepoint has invalid format a error gets thrown by firebase
+      await datapointReference.doc(datapoint.documentId).set(datapoint.toObject())
+    } catch (error) {
+      better.error(
+        `Error while executing update:\n${error.message}\n\n${JSON.stringify(datapoint)}`
+      )
+      return
+    }
 
     better.info('Uploaded new Datapoint')
   }
