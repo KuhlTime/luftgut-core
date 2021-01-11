@@ -18,10 +18,11 @@ h1 {
   margin-bottom: 0px;
 
   // Display
+  width: 90vw;
   color: lightgray;
 
   // Font
-  font-size: 90px;
+  font-size: 10vw;
 }
 
 .center {
