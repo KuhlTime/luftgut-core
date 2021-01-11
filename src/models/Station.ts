@@ -29,7 +29,7 @@ export default class Station {
 
   /* ------------------------------- Constructor ------------------------------ */
 
-  updateIntervalSeconds = 60
+  updateIntervalSeconds: number
 
   /**
    * Creates a new station instance
@@ -158,7 +158,7 @@ export default class Station {
    */
   async update(): Promise<void> {
     // When no user is logged in skip the update
-    if (!isLoggedIn) {
+    if (!isLoggedIn()) {
       return
     }
 
