@@ -175,10 +175,22 @@ export default class Station {
     // get the data for each active hook
     for (const hook of activeHooks) {
       // When the hook is invalid skip to the next hook
-      // if (!hook.isValid) continue
 
       // This gets the data from the sensor
       const data = await this.runHook(hook)
+
+      if ((typeof data).toLowerCase() !== hook.capability.type.toLowerCase()) {
+        better.error(
+          '' +
+            hook.capability.id +
+            ' type "' +
+            typeof data +
+            '" doesn\'t match required type "' +
+            hook.capability.type +
+            '"'
+        )
+        return
+      }
 
       // Add data to the datapoint
       datapoint.addData(hook.capability.id, data)

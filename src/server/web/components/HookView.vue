@@ -111,6 +111,7 @@ export default {
   background: #2d2d2d;
   color: #ccc;
   box-sizing: border-box;
+  height: auto;
 
   border-radius: 4px;
 

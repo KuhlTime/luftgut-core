@@ -18,7 +18,6 @@ async function restoreHandler() {
 
     // TODO: Check if the token expired
 
-    // TODO: Handle Login Error
     try {
       await auth.updateCurrentUser(fbUser)
     } catch (err) {
