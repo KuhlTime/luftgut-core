@@ -31,10 +31,10 @@
           <span v-if="!isLoading">Demo Account</span>
         </button>
       </form>
-      <div class="bottom">
+      <!--<div class="bottom">
         <p id="register" class="btn">Keinen Account?</p>
-        <!--<p id="lostPassword">Passwort vergessen?</p>-->
-      </div>
+        <p id="lostPassword">Passwort vergessen?</p>
+      </div>-->
     </div>
     <div class="right-panel" v-if="isLoading">
       <div class="center">
