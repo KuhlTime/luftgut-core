@@ -17,12 +17,18 @@ export default class UpdateMessage extends Message {
   isStationSetup: boolean
   deviceId: string
   hooks: Hook[]
+  wifiName: string
+  ip: string
+  updateIntervalSeconds: number
 
   constructor(
     isAuthenticated: boolean,
     isStationSetup: boolean,
     deviceId: string,
     hooks: Hook[],
+    wifiName: string,
+    ip: string,
+    updateIntervalSeconds: number,
     user?: firebase.User
   ) {
     super()
@@ -32,5 +38,8 @@ export default class UpdateMessage extends Message {
     this.isStationSetup = isStationSetup
     this.hooks = hooks
     this.deviceId = deviceId
+    this.wifiName = wifiName
+    this.ip = ip
+    this.updateIntervalSeconds = updateIntervalSeconds
   }
 }

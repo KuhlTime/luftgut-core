@@ -7,11 +7,14 @@
       <div class="grid x2">
         <card title="Station">
           <p>
-            Gerätenummer: <span class="monospace">{{ data.deviceId }}</span>
+            Gerätenummer: <span class="monospace">{{ data.deviceId }}</span> Update Interval:
+            <span class="monospace">Alle {{ data.updateIntervalSeconds }}s</span>
           </p>
         </card>
         <card title="WLAN">
-          <p>Vebunden mit: <span class="monospace">24.ERROR</span></p>
+          <p>
+            Vebunden mit: <span class="monospace">{{ data.wifiName }}</span>
+          </p>
           <p>IP: <span class="monospace">192.168.178.123</span></p>
         </card>
       </div>

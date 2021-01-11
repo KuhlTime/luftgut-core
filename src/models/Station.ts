@@ -29,16 +29,17 @@ export default class Station {
 
   /* ------------------------------- Constructor ------------------------------ */
 
+  updateIntervalSeconds = 60
+
   /**
    * Creates a new station instance
    */
-  constructor() {
-    // Activate timer
-    const seconds = 60
+  constructor(updateIntervalSeconds = 60) {
+    this.updateIntervalSeconds = updateIntervalSeconds
 
     // Bind this (station) to the update message otherwise the update function will
     // use the timer as the binding and will not have access to the stations methods
-    this.timer = setInterval(this.update.bind(this), seconds * 1000)
+    this.timer = setInterval(this.update.bind(this), this.updateIntervalSeconds * 1000)
 
     const dbHooks = lowdb.get('hooks').value()
 
