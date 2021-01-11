@@ -51,3 +51,7 @@ Ist CORS ([Cross-Origin Ressource Sharing](https://en.wikipedia.org/wiki/Cross-o
 Socket.io Tester: https://hoppscotch.io/de/realtime/<br>
 Addresse: `wss://<IP-Addresse>`<br>
 Pfad: `/socket.io` (Standard)
+
+## Bottlenecks
+
+- Zurzeit müssen Libraries die man in einer Hook verwenden möchte zuvor vía `npm` installiert werden.
