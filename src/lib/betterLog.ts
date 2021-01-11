@@ -2,7 +2,12 @@ import colors, { Color } from 'colors'
 
 // TODO: Add LogLevel Enviorment Variable
 
-function log(unit: string, message: string, unitColor: Color = colors.white, messageColor: Color = colors.white): void {
+function log(
+  unit: string,
+  message: string,
+  unitColor: Color = colors.white,
+  messageColor: Color = colors.white
+): void {
   console.log(unitColor(`[${unit}]`) + ': ' + messageColor(message))
 }
 

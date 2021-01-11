@@ -6,6 +6,6 @@ const adapter = new FileSync('db.json')
 const db = low(adapter)
 
 // Create database
-db.defaults({}).write()
+db.defaults({ hooks: {} }).write()
 
 export default db

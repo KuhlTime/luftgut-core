@@ -5,6 +5,8 @@ import getUniqueDeviceNumber from '@/lib/deviceNumber'
 import { Logger } from '@/lib/betterLog'
 import broadcast from '../server/websocket/broadcast'
 import { ErrorMessage } from './messages'
+import * as ts from 'typescript'
+import lowdb from '@/db'
 
 const better = new Logger('Station')
 
@@ -38,13 +40,23 @@ export default class Station {
     // use the timer as the binding and will not have access to the stations methods
     this.timer = setInterval(this.update.bind(this), seconds * 1000)
 
+    const dbHooks = lowdb.get('hooks').value()
+
     capabilities.get().then(snapshots => {
       // FIXME: This may fail if the update gets send immediately
       // TODO: Check for new Capabilites
       snapshots.forEach(capabilitySnapshot => {
-        // TODO: Check for existing hooks
+        // If there
+        const storedHook = dbHooks[capabilitySnapshot.id] as Partial<{
+          code: string
+          active: boolean
+        }>
 
-        const newHook = new Hook(capabilitySnapshot, '', false)
+        const newHook = new Hook(
+          capabilitySnapshot,
+          storedHook?.code ?? '',
+          storedHook?.active ?? false
+        )
         this.add(newHook)
       })
     })
@@ -109,6 +121,12 @@ export default class Station {
     } else {
       this.hooks.push(hook)
     }
+
+    // store hook in db
+    lowdb
+      .set(`hooks.${hook.capability.id}.code`, hook.code)
+      .set(`hooks.${hook.capability.id}.active`, hook.active)
+      .write()
   }
 
   indexOf(hook: Hook): number | undefined {
@@ -124,7 +142,8 @@ export default class Station {
     let value: any
 
     try {
-      value = await eval(`(async () => { ${hook.code} })()`)
+      const transpiledCode = ts.transpile(`(async () => { ${hook.code} })()`)
+      value = await eval(transpiledCode)
     } catch (error) {
       better.error(`Error while executing hook ${hook.capability.id}:\n${error}`)
       broadcast('error', new ErrorMessage(error, hook.capability.id))

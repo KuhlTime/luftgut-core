@@ -4,5 +4,14 @@ import ConfigMessage from './ConfigMessage'
 import UpdateMessage from './UpdateMessage'
 import ErrorMessage from './ErrorMessage'
 import HookUpdateMessage from './HookUpdateMessage'
+import LogMessage from './LogMessage'
 
-export { Message, LoginMessage, ConfigMessage, UpdateMessage, ErrorMessage, HookUpdateMessage }
+export {
+  Message,
+  LoginMessage,
+  ConfigMessage,
+  UpdateMessage,
+  ErrorMessage,
+  HookUpdateMessage,
+  LogMessage
+}

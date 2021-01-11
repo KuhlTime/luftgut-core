@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { UpdateMessage } from '../../../models/messages'
+import { UpdateMessage, LogMessage } from '../../../models/messages'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
     updateMessage: undefined as UpdateMessage | undefined,
-    loading: true
+    loading: true,
+    logs: [] as LogMessage[]
   },
 
   mutations: {
@@ -42,6 +43,9 @@ const store = new Vuex.Store({
     },
     updateMessage(state): UpdateMessage | undefined {
       return state.updateMessage
+    },
+    logs(state): LogMessage[] {
+      return state.logs
     }
   }
 })

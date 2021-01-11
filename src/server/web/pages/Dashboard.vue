@@ -17,6 +17,10 @@
       </div>
       <button id="forceUpdateButton" class="btn" @click="forceUpload">Upload Auslösen</button>
       <button id="logoutButton" class="btn" @click="logout">Logout</button>
+      <!--<div class="divider">
+        <h3>Server Log</h3>
+      </div>
+      <log></log>-->
       <div class="divider">
         <h3>Data Hooks</h3>
       </div>
@@ -38,6 +42,7 @@
 import Container from '../components/Container'
 import CardView from '../components/CardView'
 import HookView from '../components/HookView'
+import Log from '../components/Log'
 
 import io from '../websocket'
 
@@ -46,7 +51,8 @@ export default {
   components: {
     container: Container,
     card: CardView,
-    hook: HookView
+    hook: HookView,
+    Log
   },
   data: () => ({
     renderComponent: true
