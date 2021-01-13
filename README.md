@@ -15,6 +15,7 @@ Für den Core der Station kahmen folgende Technologien zum Einsatz:
 - `Express` - Server
 - `Socket.io` - Kommunikation zwischen Backend und Frontend
 - `VueJS` - Frontend
+- `LowDB` - Zur lokalen Speicherung des Logins und der Data Hooks
 
 ## Setup
 
