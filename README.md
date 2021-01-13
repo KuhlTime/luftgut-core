@@ -55,4 +55,4 @@ Pfad: `/socket.io` (Standard)
 ## Bottlenecks
 
 - Zurzeit müssen Libraries die man in einer Hook verwenden möchte zuvor vía `npm` installiert werden.
-- Fällt eine Data Hook aus, da sie beim Ausführen einen Fehler ausgibt werden die restlichen Daten nicht hochgeladen.
+- Fällt eine Data Hook aus, da sie beim Ausführen ein Fehler auftritt werden die restlichen Daten nicht weiter hochgeladen.
