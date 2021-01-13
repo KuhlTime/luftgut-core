@@ -5,6 +5,17 @@
   <img alt="Dashboard" src="./resources/dashboard.png" style="height: 310px; object-fit: contain;">
 </div>
 
+## Tech Stack
+
+Für den Core der Station kahmen folgende Technologien zum Einsatz:
+
+- `Balena` - Fleet Management
+- `NodeJS` - "Programmiersprache / Umgebung"
+- `Firebase` - Nutzerverwaltung, Datenspeicher
+- `Express` - Server
+- `Socket.io` - Kommunikation zwischen Backend und Frontend
+- `VueJS` - Frontend
+
 ## Setup
 
 Um den Nutzer und seine Daten zu schützen ist eine Verbindung mit dem Webserver ausschließlich über eine `https` Verbindung möglich. Für die Verwendung des https Protokolles ist es notwendig zuvor ein SSL Zertifikat zu generieren.
