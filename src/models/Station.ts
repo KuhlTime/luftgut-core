@@ -8,7 +8,7 @@ import { ErrorMessage } from './messages'
 import * as ts from 'typescript'
 import lowdb from '../db'
 
-const better = new Logger('Station')
+const better = new Logger('☁ Station')
 
 /**
  * The station class communicates with the firestore database and manages available

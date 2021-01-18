@@ -1,7 +1,7 @@
 import station from '../../../station'
 import { Logger } from '../../../lib/betterLog'
 
-const better = new Logger('Socket.io')
+const better = new Logger('⚡︎Socket')
 
 /**
  * Login Handler

@@ -1,7 +1,7 @@
 import lowdb from '../../db'
 import { Logger } from '../../lib/betterLog'
 
-const better = new Logger('Auth')
+const better = new Logger('⚙︎ Auth')
 
 function logoutHandler(): void {
   // Delete entry in db

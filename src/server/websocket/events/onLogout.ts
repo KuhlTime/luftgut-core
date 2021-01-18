@@ -1,7 +1,7 @@
 import { Logger } from '../../../lib/betterLog'
 import { auth } from '../../../firebase'
 
-const better = new Logger('Socket.io')
+const better = new Logger('⚡︎Socket')
 
 /**
  * Logout Handler

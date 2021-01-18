@@ -43,19 +43,16 @@ Da es sich um ein "Self Signed" Zertifikat handelt wird der Browser vor dem Verb
 sudo npm run <command>
 ```
 
-`start`<br>
-Startet die Anwendung aus dem `dist` Ordner. Damit dies funktioniert muss die Anwendung vorher kompiliert worden sein.
+`start` (benötigt Superuser Rechte)<br>
+Startet die Anwendung aus dem `build` Ordner. Damit dies funktioniert muss die Anwendung vorher kompiliert worden sein `npm run buid`.
 
 `build`<br>
-Kompiliert die Anwendung und erzeugt den JavaScript Output im `dist` Ordner.
-
-`build:watch`<br>
-Kompiliert die Anwendung sobald Änderungen am `src` Verzeichnis gemacht werden.
+Kompiliert die Anwendung und erzeugt den Ordner `build` in welchem der kompilierte NodeJS Code gespeichert wird.
 
 `lint`<br>
 Dies führt ESLint aus und weißt auf eventuelle Programmierfehler hin.
 
-`dev`<br>
+`dev` (benötigt Superuser Rechte)<br>
 Führt die Datei aus und achtet auf Änderungen an dem `src` Verzeichnis.
 
 `dev:lint`<br>

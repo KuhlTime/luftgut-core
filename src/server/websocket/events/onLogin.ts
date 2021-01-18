@@ -2,7 +2,7 @@ import { LoginMessage } from '../../../models/messages'
 import { Logger } from '../../../lib/betterLog'
 import { auth } from '../../../firebase'
 
-const better = new Logger('Socket.io')
+const better = new Logger('⚡︎Socket')
 
 /**
  * Login Handler

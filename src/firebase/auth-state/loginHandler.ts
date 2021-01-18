@@ -3,7 +3,7 @@ import lowdb from '../../db'
 import { Logger } from '../../lib/betterLog'
 import setStationOwner from './setStationOwner'
 
-const better = new Logger('Auth')
+const better = new Logger('⚙︎ Auth')
 
 async function loginHandler(user: firebase.User): Promise<void> {
   // User logged in

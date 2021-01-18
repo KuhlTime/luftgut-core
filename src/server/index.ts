@@ -5,8 +5,8 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 
-import { Logger } from '../lib/unless'
-const better = new Logger('Express')
+import { Logger } from '../lib/betterLog'
+const better = new Logger('⟐ Express')
 
 import unless from '../lib/unless'
 import parcelBundler from './middleware/parcel'

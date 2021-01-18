@@ -3,7 +3,7 @@ import sendUpdate from '../sendUpdate'
 import { HookUpdateMessage } from '../../../models/messages'
 import station from '../../../station'
 
-const better = new Logger('Socket.io')
+const better = new Logger('⚡︎Socket')
 
 /**
  * Login Handler

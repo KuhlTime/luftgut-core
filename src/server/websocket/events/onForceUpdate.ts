@@ -1,7 +1,7 @@
 import { Logger } from '../../../lib/betterLog'
 import sendUpdate from '../sendUpdate'
 
-const better = new Logger('Socket.io')
+const better = new Logger('⚡︎Socket')
 
 /**
  * Login Handler

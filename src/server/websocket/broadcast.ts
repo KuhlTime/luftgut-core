@@ -2,7 +2,7 @@ import io from './index'
 import { Message } from '../../models/messages'
 import { Logger } from '../../lib/betterLog'
 
-const better = new Logger('Socket.io')
+const better = new Logger('⚡︎Socket')
 
 /**
  * Broadcasts a message to all connected clients

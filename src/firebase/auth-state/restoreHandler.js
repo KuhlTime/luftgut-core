@@ -4,7 +4,7 @@ import { firebase, auth } from '../index'
 import lowdb from '../../db'
 import { Logger } from '../../lib/betterLog'
 
-const better = new Logger('Auth')
+const better = new Logger('⚙︎ Auth')
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 async function restoreHandler() {

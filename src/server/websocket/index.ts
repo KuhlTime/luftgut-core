@@ -3,7 +3,7 @@ import { Logger } from '../../lib/betterLog'
 import * as handler from './events'
 import sendUpdate from './sendUpdate'
 
-const better = new Logger('Socket.io')
+const better = new Logger('⚡︎Socket')
 
 /**
  * Options for the socket.io server.

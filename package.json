@@ -4,12 +4,12 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "start": "node -r tsconfig-paths/register -r ts-node ",
-    "build": "tsc -p tsconfig.release.json && tscpaths -p tsconfig.release.json -s ./src -o ./dist",
-    "build:watch": "tsc -r tsconfig-paths/register -w -p tsconfig.release.json",
+    "start": "node build/main.js",
+    "build": "tsc -p tsconfig.release.json && npm run copy",
+    "copy": "copyfiles -u 2 src/server/{web,ssl}/**/* build/server/",
     "lint": "eslint . --ext .ts,.tsc --fix",
-    "dev": "nodemon -r tsconfig-paths/register --watch 'src/**/*' --ignore 'src/**/*.spec.ts' --ignore 'src/server/web/**/*' --exec 'ts-node' src/main.ts",
-    "dev:lint": "nodemon -r tsconfig-paths/register --watch 'src/**/*' --ignore 'src/**/*.spec.ts' --ignore 'src/server/web/**/*' --exec 'npm run lint && ts-node' src/main.ts"
+    "dev": "nodemon --watch 'src/**/*' --ignore 'src/**/*.spec.ts' --ignore 'src/server/web/**/*' --exec 'ts-node' src/main.ts",
+    "dev:lint": "nodemon --watch 'src/**/*' --ignore 'src/**/*.spec.ts' --ignore 'src/server/web/**/*' --exec 'npm run lint && ts-node' src/main.ts"
   },
   "author": "Luftgut",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "@typescript-eslint/eslint-plugin": "^4.9.1",
     "@typescript-eslint/parser": "^4.9.1",
     "@vue/component-compiler-utils": "^3.2.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",
     "nodemon": "^2.0.6",
