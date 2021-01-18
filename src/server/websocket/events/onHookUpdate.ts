@@ -1,7 +1,7 @@
-import { Logger } from '@/lib/betterLog'
+import { Logger } from '../../../lib/betterLog'
 import sendUpdate from '../sendUpdate'
-import { HookUpdateMessage } from '@/models/messages'
-import station from '@/station'
+import { HookUpdateMessage } from '../../../models/messages'
+import station from '../../../station'
 
 const better = new Logger('Socket.io')
 

@@ -1,5 +1,5 @@
 import broadcast from './broadcast'
-import createUpdateMessage from '@/server/websocket/createUpdateMessage'
+import createUpdateMessage from '../websocket/createUpdateMessage'
 
 /**
  * This sends updated information to all connected clients

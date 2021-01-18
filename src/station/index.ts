@@ -1,4 +1,4 @@
-import { Station } from '@/models'
+import { Station } from '../models'
 
 const station = new Station()
 

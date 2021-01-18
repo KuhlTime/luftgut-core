@@ -1,6 +1,6 @@
 import Message from './Message'
-import { Hook } from '@/models'
-import { firebase } from '@/firebase'
+import { Hook } from '../../models'
+import { firebase } from '../../firebase'
 
 /**
  * This messages holds any information needed by the client.

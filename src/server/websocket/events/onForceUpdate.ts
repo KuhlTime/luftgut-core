@@ -1,4 +1,4 @@
-import { Logger } from '@/lib/betterLog'
+import { Logger } from '../../../lib/betterLog'
 import sendUpdate from '../sendUpdate'
 
 const better = new Logger('Socket.io')

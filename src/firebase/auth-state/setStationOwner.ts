@@ -1,5 +1,5 @@
-import * as fb from '@/firebase'
-import getUniqueDeviceNumber from '@/lib/deviceNumber'
+import * as fb from '../../firebase'
+import getUniqueDeviceNumber from '../../lib/deviceNumber'
 
 /**
  * This function creates a relation to the logged in user and the station object.

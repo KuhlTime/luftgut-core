@@ -1,6 +1,6 @@
 import io from './index'
-import { Message } from '@/models/messages'
-import { Logger } from '@/lib/betterLog'
+import { Message } from '../../models/messages'
+import { Logger } from '../../lib/betterLog'
 
 const better = new Logger('Socket.io')
 

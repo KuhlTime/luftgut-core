@@ -1,5 +1,5 @@
-import station from '@/station'
-import { Logger } from '@/lib/betterLog'
+import station from '../../../station'
+import { Logger } from '../../../lib/betterLog'
 
 const better = new Logger('Socket.io')
 

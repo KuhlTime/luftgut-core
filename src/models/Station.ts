@@ -1,12 +1,12 @@
 import { firebase, checkStationExists, stations, capabilities, isLoggedIn } from '../firebase'
 import { Hook } from './'
 import Datapoint from './Datapoint'
-import getUniqueDeviceNumber from '@/lib/deviceNumber'
-import { Logger } from '@/lib/betterLog'
+import getUniqueDeviceNumber from '../lib/deviceNumber'
+import { Logger } from '../lib/betterLog'
 import broadcast from '../server/websocket/broadcast'
 import { ErrorMessage } from './messages'
 import * as ts from 'typescript'
-import lowdb from '@/db'
+import lowdb from '../db'
 
 const better = new Logger('Station')
 

@@ -1,7 +1,7 @@
-import * as fb from '@/firebase'
-import { UpdateMessage } from '@/models/messages'
-import getUniqueDeviceNumber from '@/lib/deviceNumber'
-import station from '@/station'
+import * as fb from '../../firebase'
+import { UpdateMessage } from '../../models/messages'
+import getUniqueDeviceNumber from '../../lib/deviceNumber'
+import station from '../../station'
 import wifiName from 'wifi-name'
 import ip from 'ip'
 

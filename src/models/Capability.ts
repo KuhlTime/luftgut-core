@@ -1,4 +1,4 @@
-import { firebase, capabilities } from '@/firebase'
+import { firebase, capabilities } from '../firebase'
 
 export default class Capability {
   id: string

@@ -1,6 +1,6 @@
-import { LoginMessage } from '@/models/messages'
-import { Logger } from '@/lib/betterLog'
-import { auth } from '@/firebase'
+import { LoginMessage } from '../../../models/messages'
+import { Logger } from '../../../lib/betterLog'
+import { auth } from '../../../firebase'
 
 const better = new Logger('Socket.io')
 

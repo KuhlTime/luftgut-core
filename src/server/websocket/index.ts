@@ -1,5 +1,5 @@
 import { Server } from 'socket.io'
-import { Logger } from '@/lib/betterLog'
+import { Logger } from '../../lib/betterLog'
 import * as handler from './events'
 import sendUpdate from './sendUpdate'
 
