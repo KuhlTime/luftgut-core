@@ -199,3 +199,4 @@ $RECYCLE.BIN/
 *.cert
 *.pem
 db.json
+build
