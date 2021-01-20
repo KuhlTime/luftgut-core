@@ -28,7 +28,7 @@ ENV INITSYSTEM=on
 ENV NODE_ENV='production'
 
 # Expose http/https ports
-EXPOSE 80 443
+EXPOSE 443
 
 # Start the application
-CMD modprobe i2c-dev && node build/main.js
+CMD node build/main.js
