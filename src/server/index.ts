@@ -47,7 +47,7 @@ app.use(bodyParser.json())
 
 // Load the keys
 // https://stackoverflow.com/a/24283204/4179020
-const privateKeyPath = path.join(__dirname, 'ssl/key.pem')
+const privateKeyPath = path.join(__dirname, 'ssl/server.key')
 const privateKey = fs.readFileSync(privateKeyPath, 'utf8')
 const certificatePath = path.join(__dirname, 'ssl/server.cert')
 const certificate = fs.readFileSync(certificatePath, 'utf8')

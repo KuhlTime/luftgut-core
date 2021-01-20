@@ -4,7 +4,7 @@ FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-node
 WORKDIR /usr/src/app
 
 # Install python
-RUN apt update && apt install -yq make gcc g++ python3 python3-rpi.gpio i2c-tools
+RUN apt update && apt install -yq make gcc g++ python3 python3-rpi.gpio openssl
 
 # Copy just the package.json and package-lock.json
 COPY package*.json ./
@@ -12,14 +12,19 @@ COPY package*.json ./
 # Install production dependencies
 RUN JOBS=MAX npm ci --unsafe-perm
 
-# Clean apt
-RUN apt remove && apt autoremove && apt clean && rm -rf /var/lib/apt/lists/*
-
 # Clean up image to reduce size
 RUN npm cache clean --force && rm -rf /tmp/*
 
 # Copy files all files
 COPY . ./
+
+# Generate SSL certificate
+WORKDIR /usr/src/app/src/server/ssl
+RUN openssl req -nodes -new -x509 --config openssl.conf -keyout server.key -out server.cert
+WORKDIR /usr/src/app
+
+# Clean apt
+RUN apt remove make gcc g++ openssl && apt autoremove && apt clean && rm -rf /var/lib/apt/lists/*
 
 # Enable systemd init system in container
 ENV INITSYSTEM=on
