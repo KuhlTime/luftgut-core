@@ -15,13 +15,13 @@ RUN JOBS=MAX npm install --unsafe-perm --quiet
 # Copy files all files
 COPY . ./
 
-# Compile
-RUN npm run build
-
 # Generate SSL certificate
 WORKDIR /usr/src/app/src/server/ssl
 RUN openssl req -nodes -new -x509 --config openssl.conf -keyout server.key -out server.cert
 WORKDIR /usr/src/app
+
+# Compile
+RUN npm run build
 
 # Clean apt
 RUN apt remove make gcc g++ openssl && apt autoremove && apt clean && rm -rf /var/lib/apt/lists/*
