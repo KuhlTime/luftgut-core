@@ -10,16 +10,13 @@ RUN apt update && apt install -yq make gcc g++ python3 python3-rpi.gpio openssl
 COPY package*.json ./
 
 # Install production dependencies
-RUN JOBS=MAX npm install --unsafe-perm
+RUN JOBS=MAX npm install --unsafe-perm --quiet
 
 # Copy files all files
 COPY . ./
 
 # Compile
 RUN npm run build
-
-# Clean up image to reduce size
-RUN npm prune --production && npm cache clean --force && rm -rf /tmp/*
 
 # Generate SSL certificate
 WORKDIR /usr/src/app/src/server/ssl
