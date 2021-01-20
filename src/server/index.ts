@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import https from 'https'
 import express from 'express'
-import bodyParser from 'body-parser'
 import cors from 'cors'
 
 import { Logger } from '../lib/betterLog'
@@ -38,10 +37,6 @@ const corsOptions = {
   app.use(cors(corsOptions))
 }*/
 app.use(cors({ origin: '*' }))
-
-// === SETUP BODYPARSER ===
-
-app.use(bodyParser.json())
 
 // === SETUP SSL ===
 
