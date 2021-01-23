@@ -23,21 +23,9 @@ Um den Nutzer und seine Daten zu schützen ist eine Verbindung mit dem Webserver
 
 ```shell
 cd src/server/ssl
-```
-
-```shell
 openssl genrsa -out key.pem
-```
-
-```shell
 openssl req -new -key key.pem -out csr.pem
-```
-
-```shell
 openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
-```
-
-```
 rm csr.pem
 ```
 
