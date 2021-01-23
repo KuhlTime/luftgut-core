@@ -26,11 +26,19 @@ cd src/server/ssl
 ```
 
 ```shell
-openssl req -newkey rsa -new -config openssl.conf -out csr.pem
+openssl genrsa -out key.pem
 ```
 
 ```shell
-openssl x509 -req -in csr.pem -signkey key.pem -out server.cert
+openssl req -new -key key.pem -out csr.pem
+```
+
+```shell
+openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
+```
+
+```
+rm csr.pem
 ```
 
 Da es sich um ein "Self Signed" Zertifikat handelt wird der Browser vor dem Verbinden mit dieser Webseite warnen. Solange niemand zu dem Raspberry Pi und dem darauf gespeicherten Schlüsselpaar zugang hat, hat der Nutzer hier nichts zu befürchten.
