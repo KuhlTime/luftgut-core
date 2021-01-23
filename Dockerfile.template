@@ -16,8 +16,9 @@ RUN JOBS=MAX npm install --unsafe-perm --quiet
 COPY . ./
 
 # Generate SSL certificate
+# Based on https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTPS-server/
 WORKDIR /usr/src/app/src/server/ssl
-RUN openssl req -nodes -new -x509 --config openssl.conf -keyout server.key -out server.cert
+RUN openssl genrsa -out key.pem && openssl req -new -key key.pem -out csr.pem -config openssl.conf && openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem && rm csr.pem
 WORKDIR /usr/src/app
 
 # Compile

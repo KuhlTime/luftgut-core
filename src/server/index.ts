@@ -40,19 +40,11 @@ app.use(cors({ origin: '*' }))
 
 // === SETUP SSL ===
 
-// Load the keys
-// https://stackoverflow.com/a/24283204/4179020
-const privateKeyPath = path.join(__dirname, 'ssl/server.key')
-const privateKey = fs.readFileSync(privateKeyPath, 'utf8')
-const certificatePath = path.join(__dirname, 'ssl/server.cert')
-const certificate = fs.readFileSync(certificatePath, 'utf8')
-
+// https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTPS-server/
 // In case the key is configured to use a passphrase add a `passphrase` property to the object.
-const serverOptions = {
-  key: privateKey,
-  cert: certificate
-  // requestCert: false,
-  // rejectUnauthorized: false
+const httpsOptions = {
+  key: fs.readFileSync(path.join(__dirname, './ssl/key.pem'), 'utf8'),
+  cert: fs.readFileSync(path.join(__dirname, './ssl/cert.pem'), 'utf8')
 }
 
 // === SETUP ROUTES ===
@@ -61,7 +53,7 @@ app.use(unless(parcelBundler.middleware(), '/socket.io'))
 
 // === SETUP SERVER ===
 
-const server = https.createServer(serverOptions, app)
+const server = https.createServer(httpsOptions, app)
 
 // === SETUP SOCKET.IO ===
 
@@ -73,5 +65,3 @@ server.listen(PORT, () => {
   const address = server.address() as { port: number }
   better.info(`Server listening on Port ${address.port}`)
 })
-
-export { privateKeyPath, certificatePath }

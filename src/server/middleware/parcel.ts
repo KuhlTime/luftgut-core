@@ -17,7 +17,7 @@ const parcelOptions = {
   logLevel: 0,
   https: {
     key: path.join(__dirname, '../ssl/key.pem'),
-    cert: path.join(__dirname, '../ssl/server.cert')
+    cert: path.join(__dirname, '../ssl/cert.pem')
   }
 }
 
