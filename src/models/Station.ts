@@ -164,7 +164,9 @@ export default class Station {
     hooks.forEach(hook => this.add(hook))
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async runHook(hook: Hook): Promise<any> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let value: any
 
     try {
