@@ -11,6 +11,15 @@ import lowdb from '../db'
 const better = new Logger('☁ Station')
 
 /**
+ * A reason to why a upload event has been skiped
+ */
+enum SkipReason {
+  None,
+  MissingRequired,
+  NoData
+}
+
+/**
  * The station class communicates with the firestore database and manages available
  * capabilities.
  */
@@ -26,6 +35,11 @@ export default class Station {
    * The reference to the interval timer
    */
   timer: NodeJS.Timeout
+
+  /**
+   * The reason why the last message has been skiped. To limit the amount of log messages
+   */
+  skipReason = SkipReason.None
 
   /* ------------------------------- Constructor ------------------------------ */
 
@@ -165,6 +179,21 @@ export default class Station {
   }
 
   /**
+   * Gets all hooks that are required but are not setup
+   */
+  getInvalidHooks(): Hook[] {
+    return this.hooks.filter(h => {
+      if (h.capability.required === true) {
+        // console.log('Required Hook: ' + this.capability.id + ' - ' + this.active)
+        return !h.active
+      } else {
+        // Hooks that are not marked as required are always valid
+        return false
+      }
+    })
+  }
+
+  /**
    * Retrives all hooks and updates the data inside the database.
    */
   async update(): Promise<void> {
@@ -181,11 +210,15 @@ export default class Station {
     }
 
     // Check if all required hooks are enabled
-    const invalidHooks = this.hooks.filter(h => !h.valid)
+    const invalidHooks = this.getInvalidHooks()
 
     if (invalidHooks.length > 0) {
-      better.warn('Not all required hooks are enabled. Skip Upload')
-      better.warn('Missing Hooks: ' + invalidHooks.map(h => h.capability.id).join(', '))
+      if (this.skipReason !== SkipReason.MissingRequired) {
+        better.warn('Not all required hooks are enabled. Skip Upload')
+        better.warn('Missing Hooks: ' + invalidHooks.map(h => h.capability.id).join(', '))
+      }
+
+      this.skipReason = SkipReason.MissingRequired
       return
     }
 
@@ -234,7 +267,11 @@ export default class Station {
 
     // Guard that the datapoint is not empty
     if (datapoint.isEmpty) {
-      better.warn('Datapoint has no data. Skip upload.')
+      if (this.skipReason !== SkipReason.NoData) {
+        better.warn('Datapoint has no data. Skip upload.')
+      }
+
+      this.skipReason = SkipReason.NoData
       return
     }
 
@@ -243,13 +280,14 @@ export default class Station {
     try {
       // In case the datepoint has invalid format a error gets thrown by firebase
       await datapointReference.doc(datapoint.documentId).set(datapoint.toObject())
+      better.info('Uploaded new Datapoint: ' + datapoint.documentId)
+
+      this.skipReason = SkipReason.None
     } catch (error) {
       better.error(
         `Error while executing update:\n${error.message}\n\n${JSON.stringify(datapoint)}`
       )
       return
     }
-
-    better.info('Uploaded new Datapoint')
   }
 }

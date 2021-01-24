@@ -1,10 +1,10 @@
-import * as fb from '../../firebase'
+import * as fb from '..'
 import getUniqueDeviceNumber from '../../lib/deviceNumber'
 
 /**
- * This function creates a relation to the logged in user and the station object.
+ * This function sets up the stations data on firebase. Such as assigning an owner to the station.
  */
-export default async function setOwner(): Promise<void> {
+export default async function initializeStation(): Promise<void> {
   const user = fb.getCurrentUser()
   const uid = user.uid
   const deviceId = await getUniqueDeviceNumber()

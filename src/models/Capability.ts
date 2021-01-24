@@ -18,7 +18,7 @@ export default class Capability {
     this.type = data.type
     this.unit = data.unit
     this.roundTo = data.roundTo
-    this.required = data.required ?? false
+    this.required = data.required || false
   }
 
   /**
