@@ -23,11 +23,30 @@ const parcelOptions = {
 
 const bundler = new Bundler(srcFile, parcelOptions)
 
+var isBuilding = false
+
+function delayedInfo(timeoutSeconds: number, message: string) {
+  setTimeout(() => {
+    if (isBuilding) better.info(message)
+  }, timeout * 1000)
+}
+
 bundler.on('buildStart', () => {
+  isBuilding = true
+
   better.info('Started Build')
+
+  // In case the build takes longer than expected let the user know
+  delayedInfo(
+    40,
+    'If this is the first startup of the station the compilation may take a couple of minutes.'
+  )
+
+  delayedInfo(60, 'Try to run in circles to shorten time.')
 })
 
 bundler.on('buildEnd', () => {
+  isBuilding = false
   better.info('Build Completed')
 })
 
