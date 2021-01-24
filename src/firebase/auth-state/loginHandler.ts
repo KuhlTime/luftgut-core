@@ -7,7 +7,7 @@ const better = new Logger('⚙︎ Auth')
 
 async function loginHandler(user: firebase.User): Promise<void> {
   // User logged in
-  better.info('User Logged In')
+  better.info('Logged in: ' + user.email)
 
   await setStationOwner()
 
