@@ -15,9 +15,7 @@
           <p>
             Vebunden mit: <span class="monospace">{{ data.wifiName }}</span>
           </p>
-          <p>
-            IP: <span class="monospace">{{ data.ip }}</span>
-          </p>
+          <p>IP: <span class="monospace">192.168.178.123</span></p>
         </card>
       </div>
       <button id="forceUpdateButton" class="btn" @click="forceUpload">Upload Auslösen</button>
@@ -34,7 +32,7 @@
         Kreativität sind hier keine Grenzen gesetzt!
         <br />
         <br />
-        <a>Mehr Infos zu den Data Hooks</a>
+        <a href="/instructions">Mehr Infos zu den Data Hooks</a>
       </p>
       <div class="grid x1" v-if="renderComponent">
         <hook v-for="hook in hooks" :key="hook.capability.id" :hook="hook"></hook>

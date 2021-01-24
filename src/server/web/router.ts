@@ -28,6 +28,14 @@ const router = new Router({
       }
     },
     {
+      path: 'instructions',
+      name: 'Instructions',
+      component: () => import('./pages/Instructions'),
+      meta: {
+        showNavbar: true
+      }
+    },
+    {
       path: '/disconnected',
       name: 'Disconnected',
       component: Disconnected,
