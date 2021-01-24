@@ -2,7 +2,7 @@ import * as fb from '../../firebase'
 import { UpdateMessage } from '../../models/messages'
 import getUniqueDeviceNumber from '../../lib/deviceNumber'
 import station from '../../station'
-// import wifiName from 'wifi-name'
+import wifiName from 'wifi-name'
 import ip from 'ip'
 
 /**
@@ -16,7 +16,7 @@ export default async (): Promise<UpdateMessage> => {
     await fb.checkStationExists(deviceId),
     deviceId,
     station.hooks,
-    'Unavailable', // await wifiName()
+    await wifiName(),
     ip.address(),
     station.updateIntervalSeconds,
     fb.getCurrentUser()
