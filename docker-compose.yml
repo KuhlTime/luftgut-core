@@ -1,0 +1,18 @@
+version: "2.1"
+
+services:
+  luftgut-core:
+    build: .
+    ports:
+      - 443:443
+    privileged: true
+
+  wifi-connect:
+    build: ./wifi-connect
+    network_mode: "host"
+    labels:
+      io.balena.features.dbus: "1"
+    cap_add:
+      - NET_ADMIN
+    environment:
+      DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
