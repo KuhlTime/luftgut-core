@@ -1,5 +1,7 @@
 # luftgut-core
 
+Setup Page:
+
 <div style="display: flex; width: 100%;">
   <img alt="Dashboard" src="./resources/login.png" style="height: 300px; object-fit: contain;">
   <img alt="Dashboard" src="./resources/dashboard.png" style="height: 310px; object-fit: contain;">
