@@ -51,6 +51,7 @@ bundler.on('buildEnd', () => {
 })
 
 bundler.on('buildError', error => {
+  isBuilding = false
   better.error(error.message)
 })
 
