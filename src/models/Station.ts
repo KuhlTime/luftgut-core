@@ -46,6 +46,7 @@ export default class Station {
     capabilities.get().then(snapshots => {
       // FIXME: This may fail if the update gets send immediately
       // TODO: Check for new Capabilites
+
       snapshots.forEach(capabilitySnapshot => {
         // If there
         const storedHook = dbHooks[capabilitySnapshot.id] as Partial<{
@@ -123,6 +124,16 @@ export default class Station {
       this.hooks.push(hook)
     }
 
+    this.hooks.sort((a, b) => {
+      if (a.capability.required === b.capability.required) {
+        // Secondary
+        return a.capability.nameDe > b.capability.nameDe ? 1 : -1
+      } else {
+        // Priority
+        return a.capability.required > b.capability.required ? -1 : 1
+      }
+    })
+
     // store hook in db
     lowdb
       .set(`hooks.${hook.capability.id}.code`, hook.code)
@@ -169,6 +180,16 @@ export default class Station {
       return
     }
 
+    // Check if all required hooks are enabled
+    const invalidHooks = this.hooks.filter(h => !h.valid)
+
+    if (invalidHooks.length > 0) {
+      better.warn('Not all required hooks are enabled. Skip Upload')
+      better.warn('Missing Hooks: ' + invalidHooks.map(h => h.capability.id).join(', '))
+      return
+    }
+
+    // Get all hooks marked as active
     const activeHooks = this.hooks.filter(h => h.active)
 
     const datapoint = new Datapoint()
@@ -178,8 +199,9 @@ export default class Station {
       // When the hook is invalid skip to the next hook
 
       // This gets the data from the sensor
-      const data = await this.runHook(hook)
+      let data = await this.runHook(hook)
 
+      // Return type does not match required type
       if ((typeof data).toLowerCase() !== hook.capability.type.toLowerCase()) {
         better.error(
           '' +
@@ -193,13 +215,26 @@ export default class Station {
         return
       }
 
+      // Round Number to decimal place
+      if (
+        hook.capability.roundTo !== undefined &&
+        hook.capability.type.toLowerCase() === 'number'
+      ) {
+        if (hook.capability.roundTo === 0) {
+          data = Math.round(data)
+        } else {
+          const factor = Math.pow(10, hook.capability.roundTo)
+          data = Math.round(data * factor) / factor
+        }
+      }
+
       // Add data to the datapoint
       datapoint.addData(hook.capability.id, data)
     }
 
     // Guard that the datapoint is not empty
     if (datapoint.isEmpty) {
-      better.info('Datapoint has no data. Skip upload.')
+      better.warn('Datapoint has no data. Skip upload.')
       return
     }
 

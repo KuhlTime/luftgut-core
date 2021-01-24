@@ -7,6 +7,7 @@ export default class Capability {
   type: string
   unit?: string
   roundTo?: number
+  required: boolean
 
   constructor(documentSnapshot: firebase.firestore.DocumentSnapshot) {
     this.id = documentSnapshot.id
@@ -17,6 +18,7 @@ export default class Capability {
     this.type = data.type
     this.unit = data.unit
     this.roundTo = data.roundTo
+    this.required = data.required ?? false
   }
 
   /**

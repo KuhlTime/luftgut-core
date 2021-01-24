@@ -16,7 +16,7 @@ export default async (): Promise<UpdateMessage> => {
     await fb.checkStationExists(deviceId),
     deviceId,
     station.hooks,
-    'Not Implemented', // await wifiName()
+    'Unavailable', // await wifiName()
     ip.address(),
     station.updateIntervalSeconds,
     fb.getCurrentUser()

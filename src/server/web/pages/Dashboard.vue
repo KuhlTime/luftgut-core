@@ -15,7 +15,9 @@
           <p>
             Vebunden mit: <span class="monospace">{{ data.wifiName }}</span>
           </p>
-          <p>IP: <span class="monospace">192.168.178.123</span></p>
+          <p>
+            IP: <span class="monospace">{{ data.ip }}</span>
+          </p>
         </card>
       </div>
       <button id="forceUpdateButton" class="btn" @click="forceUpload">Upload Auslösen</button>

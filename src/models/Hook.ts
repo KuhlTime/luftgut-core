@@ -26,4 +26,13 @@ export default class Hook {
     this.code = code
     this.active = active
   }
+
+  get valid(): boolean {
+    if (this.capability.required) {
+      return this.active && this.code !== ''
+    } else {
+      // Hooks that are not marked as required are always valid
+      return true
+    }
+  }
 }

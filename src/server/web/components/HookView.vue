@@ -1,10 +1,13 @@
 <template>
-  <card class="hook" :title="name">
+  <card class="hook" :class="{ required: isRequired }" :title="name">
     <p v-if="unit">
       Einheit: <code>{{ unit }}</code>
     </p>
     <p>
       Erwarteter Rückgabewert: <code>{{ type }}</code>
+    </p>
+    <p>
+      Notwendig: <code>{{ isRequired ? 'Ja' : 'Nein' }}</code>
     </p>
     <p><input type="checkbox" v-model="active" /> {{ activeText }}</p>
     <prism-editor
@@ -70,6 +73,9 @@ export default {
     },
     activeText: function () {
       return this.active ? 'Aktiviert' : 'Deaktiviert'
+    },
+    isRequired: function () {
+      return this.hook.capability.required ?? false
     }
   },
   created: function () {
@@ -105,6 +111,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.required {
+  border: 3px solid #e74c3c;
+}
+
 /* required class */
 .my-editor {
   /* we dont use `language-` classes anymore so thats why we need to add background and text color manually */

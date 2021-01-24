@@ -23,12 +23,12 @@ const parcelOptions = {
 
 const bundler = new Bundler(srcFile, parcelOptions)
 
-var isBuilding = false
+let isBuilding = false
 
 function delayedInfo(timeoutSeconds: number, message: string) {
   setTimeout(() => {
     if (isBuilding) better.info(message)
-  }, timeout * 1000)
+  }, timeoutSeconds * 1000)
 }
 
 bundler.on('buildStart', () => {
