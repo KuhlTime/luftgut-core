@@ -1,0 +1,24 @@
+// Import the Library
+const bme280 = require('bme280')
+
+/**
+ * Gets a data object from the sensor
+ */
+async function getData(): Promise<any> {
+  const sensor = await bme280.open()
+  const data = await sensor.read()
+
+  await sensor.close()
+
+  return data
+}
+
+/**
+ * Returns the humidity in percent
+ */
+const getPressure: Promise<number> = async () => {
+  const data = await getData()
+  return data.pressure
+}
+
+return await getPressure()

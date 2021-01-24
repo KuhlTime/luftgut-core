@@ -32,7 +32,7 @@
         Kreativität sind hier keine Grenzen gesetzt!
         <br />
         <br />
-        <a href="/instructions">Mehr Infos zu den Data Hooks</a>
+        <router-link to="instructions">Mehr Infos zu den Data Hooks</router-link>
       </p>
       <div class="grid x1" v-if="renderComponent">
         <hook v-for="hook in hooks" :key="hook.capability.id" :hook="hook"></hook>

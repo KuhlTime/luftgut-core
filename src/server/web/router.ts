@@ -28,8 +28,8 @@ const router = new Router({
       }
     },
     {
-      path: 'instructions',
-      name: 'Instructions',
+      path: '/instructions',
+      name: 'Anleitung',
       component: () => import('./pages/Instructions'),
       meta: {
         showNavbar: true
@@ -59,8 +59,12 @@ router.beforeEach((to, from, next) => {
   if (to.name === 'Disconnected') {
     console.log('Navigate to Disconnect')
     next()
-  } else if (to.name !== 'Login' && !store.getters.isAuthorized) next({ name: 'Login' })
-  else next()
+  } else if (to.name !== 'Login' && !store.getters.isAuthorized) {
+    next({ name: 'Login' })
+  } else {
+    console.log('Navigate to: ' + to.name)
+    next()
+  }
 })
 
 export default router
