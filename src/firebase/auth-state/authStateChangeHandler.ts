@@ -13,7 +13,7 @@ import sendUpdate from '../../server/websocket/sendUpdate'
 let startup = true
 
 auth.onAuthStateChanged(async user => {
-  // On launch the user will always ne logged out
+  // On launch the user will always be logged out
   if (startup) {
     startup = false
     restoreHandler()
