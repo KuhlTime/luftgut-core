@@ -1,7 +1,6 @@
 import Message from './Message'
 
 export default class LogMessage extends Message {
-  time: Date = new Date()
   topic: string
   message: string
   type: string
